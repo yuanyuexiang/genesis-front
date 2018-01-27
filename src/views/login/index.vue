@@ -1,7 +1,7 @@
 <template>
     <div class="login-container" style="background-color: #141a48;margin: 0px;overflow: hidden;">
       <div id="canvascontainer" ref='can'></div>
-      <div class="log-logo">江宁区基督教会佑恩堂公众号管理系统</div>
+      <div class="log-logo">江宁区基督教佑恩堂公众号管理系统</div>
       <Form ref="loginForm" autoComplete="on" :model="loginForm" :rules="loginRules"  class="card-box login-form">
         <Form-item prop="email">
           <Input type="text" v-model="loginForm.email" placeholder="Username" autoComplete="on">
@@ -22,20 +22,20 @@
         -->
     </Form>
     <div class="app-copyright">
-      <p>© 2018 江宁区基督教会佑恩堂</p>
+      <p>© 2018 江宁区基督教佑恩堂</p>
     </div>
   </div>
 </template>
 
 <script>
-    import { isWscnEmail } from 'utils/validate';
+    import { isPhoneNumber } from 'utils/validate';
 
     export default {
       name: 'login',
       data() {
         const validateEmail = (rule, value, callback) => {
-          if (!isWscnEmail(value)) {
-            callback(new Error('请输入正确的合法邮箱'));
+          if (!isPhoneNumber(value)) {
+            callback(new Error('请输入正确的手机号'));
           } else {
             callback();
           }
@@ -325,7 +325,7 @@ function render() {
           text-align: center;
           color: #2d8cf0;
           font-weight: bold;
-          font-size: 40px;
+          font-size: 30px;
           margin: 120px auto;
           margin-bottom: 30px;
         }
@@ -333,7 +333,7 @@ function render() {
           position: absolute;
           left: 0;
           right: 0;
-          width: 400px;
+          width: 300px;
           padding: 35px 35px 15px 35px;
           margin: 10px auto;
         }
@@ -343,7 +343,7 @@ function render() {
           bottom:0;
           position: absolute;  
           text-align: center;
-          margin-bottom: 40px;
+          margin-bottom: 10%;
         }
         .el-form-item {
             border: 1px solid rgba(255, 255, 255, 0.1);
