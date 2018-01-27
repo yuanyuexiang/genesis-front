@@ -1,7 +1,7 @@
 <template>
     <div class="login-container" style="background-color: #141a48;margin: 0px;overflow: hidden;">
       <div id="canvascontainer" ref='can'></div>
-
+      <div class="log-logo">江宁区基督教会佑恩堂公众号管理系统</div>
       <Form ref="loginForm" autoComplete="on" :model="loginForm" :rules="loginRules"  class="card-box login-form">
         <Form-item prop="email">
           <Input type="text" v-model="loginForm.email" placeholder="Username" autoComplete="on">
@@ -21,6 +21,9 @@
         <div class='tips'>editor账号:editor@wz.com 密码123456</div>
         -->
     </Form>
+    <div class="app-copyright">
+      <p>© 2018 江宁区基督教会佑恩堂</p>
+    </div>
   </div>
 </template>
 
@@ -46,7 +49,7 @@
         };
         return {
           loginForm: {
-            email: 'admin@wz.com',
+            email: '',
             password: ''
           },
           loginRules: {
@@ -89,16 +92,12 @@
   var i = 0;
 
   for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
-
     for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
-
       particle = particles[ i ++ ] = new THREE.Particle( material );
       particle.position.x = ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 );
       particle.position.z = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 );
       scene.add( particle );
-
     }
-
   }
 
   renderer = new THREE.CanvasRenderer();
@@ -284,6 +283,7 @@ function render() {
       color: #fff;
       margin-bottom: 5px;
     } 
+    
     .login-container {
         height: 100vh;
         background-color: #2d3a4b;
@@ -319,16 +319,32 @@ function render() {
             text-align: center;
             font-weight: bold;
         }
-
-        .login-form {
-            position: absolute;
-            left: 0;
-            right: 0;
-            width: 400px;
-            padding: 35px 35px 15px 35px;
-            margin: 120px auto;
+        .log-logo {
+          left: 0;
+          right: 0;
+          text-align: center;
+          color: #2d8cf0;
+          font-weight: bold;
+          font-size: 40px;
+          margin: 120px auto;
+          margin-bottom: 30px;
         }
-
+        .login-form {
+          position: absolute;
+          left: 0;
+          right: 0;
+          width: 400px;
+          padding: 35px 35px 15px 35px;
+          margin: 10px auto;
+        }
+        .app-copyright {
+          left: 0;
+          right: 0;
+          bottom:0;
+          position: absolute;  
+          text-align: center;
+          margin-bottom: 40px;
+        }
         .el-form-item {
             border: 1px solid rgba(255, 255, 255, 0.1);
             background: rgba(0, 0, 0, 0.1);
