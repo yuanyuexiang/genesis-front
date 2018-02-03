@@ -14,8 +14,6 @@ const userMap = {
     introduction: '我是编辑',
     name: 'Normal Editor',
     uid: '002'
-
-
   },
   developer: {
     role: ['develop'],
@@ -27,9 +25,10 @@ const userMap = {
 }
 
 export default {
-  loginByEmail: config => {
-    const { email } = JSON.parse(config.body);
-      return userMap[email.split('@')[0]];
+  loginByPhone: config => {
+    const { phone } = JSON.parse(config.body);
+    let user = userMap[phone]
+    return user;
   },
   getInfo: config => {
     const { token } = param2Obj(config.url);

@@ -1,11 +1,11 @@
-import { loginByEmail, logout, getInfo } from 'api/login';
+import { loginByPhone, logout, getInfo } from 'api/login';
 import Cookies from 'js-cookie';
 
 const user = {
   state: {
     user: '',
     status: '',
-    email: '',
+    phone: '',
     code: '',
     uid: undefined,
     auth_type: '',
@@ -32,8 +32,8 @@ const user = {
     SET_UID: (state, uid) => {
       state.uid = uid;
     },
-    SET_EMAIL: (state, email) => {
-      state.email = email;
+    SET_PHONE: (state, phone) => {
+      state.phone = phone;
     },
     SET_INTRODUCTION: (state, introduction) => {
       state.introduction = introduction;
@@ -62,23 +62,22 @@ const user = {
   },
 
   actions: {
-    // 邮箱登录
-    LoginByEmail({ commit }, userInfo) {
-      const email = userInfo.email.trim();
+    // 手机登录
+    LoginByPhone({ commit }, userInfo) {
+      const phone = userInfo.phone.trim();
       return new Promise((resolve, reject) => {
-        loginByEmail(email, userInfo.password).then(response => {
+        loginByPhone(phone, userInfo.password).then(response => {
           const data = response.data;
           console.log(response.data);
           Cookies.set('Admin-Token', response.data.token);
           commit('SET_TOKEN', data.token);
-          commit('SET_EMAIL', email);
+          commit('SET_PHONE', phone);
           resolve();
         }).catch(error => {
           reject(error);
         });
       });
     },
-
 
     // 获取用户信息
     GetInfo({ commit, state }) {
@@ -110,7 +109,6 @@ const user = {
         });
       });
     },
-
 
     // 登出
     LogOut({ commit, state }) {

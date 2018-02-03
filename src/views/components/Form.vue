@@ -322,9 +322,9 @@
                     name: [
                         { required: true, message: '姓名不能为空', trigger: 'blur' }
                     ],
-                    mail: [
-                        { required: true, message: '邮箱不能为空', trigger: 'blur' },
-                        { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
+                    phone: [
+                        { required: true, message: '手机不能为空', trigger: 'blur' },
+                        { type: 'phone', message: '手机格式不正确', trigger: 'blur' }
                     ],
                     city: [
                         { required: true, message: '请选择城市', trigger: 'change' }

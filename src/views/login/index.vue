@@ -3,8 +3,8 @@
       <div id="canvascontainer" ref='can'></div>
       <div class="log-logo">佑恩堂公众号管理系统</div>
       <Form ref="loginForm" autoComplete="on" :model="loginForm" :rules="loginRules"  class="card-box login-form">
-        <Form-item prop="email">
-          <Input type="text" v-model="loginForm.email" placeholder="用户名" autoComplete="on">
+        <Form-item prop="phone">
+          <Input type="text" v-model="loginForm.phone" placeholder="用户名" autoComplete="on">
             <Icon type="ios-person-outline" slot="prepend" ></Icon>
           </Input>
         </Form-item>
@@ -32,7 +32,7 @@
   export default {
     name: 'login',
     data() {
-      const validateEmail = (rule, value, callback) => {
+      const validatePhoneNumber = (rule, value, callback) => {
         if (!isPhoneNumber(value)) {
           callback(new Error('请输入正确的手机号'));
         } else {
@@ -48,12 +48,12 @@
       };
       return {
         loginForm: {
-          email: '',
+          phone: '',
           password: ''
         },
         loginRules: {
-          email: [
-              { required: true, trigger: 'blur', validator: validateEmail }
+          phone: [
+              { required: true, trigger: 'blur', validator: validatePhoneNumber }
           ],
           password: [
               { required: true, trigger: 'blur', validator: validatePass }
@@ -67,17 +67,12 @@
     mounted () {
       container = document.createElement( 'div' );
       this.$refs.can.appendChild( container );  
-
       camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
       camera.position.z = 1000;
-
       scene = new THREE.Scene();
-
       particles = new Array();
-
       var PI2 = Math.PI * 2;
       var material = new THREE.ParticleCanvasMaterial( {
-
         color: 0x0078de,
         program: function ( context ) {
           context.beginPath();
@@ -99,7 +94,6 @@
       renderer = new THREE.CanvasRenderer();
       renderer.setSize( window.innerWidth, window.innerHeight );
       container.appendChild( renderer.domElement );
-
       document.addEventListener( 'mousemove', onDocumentMouseMove, false );
       //
       window.addEventListener( 'resize', onWindowResize, false );
@@ -110,9 +104,8 @@
         this.$refs.loginForm.validate(valid => {
           if (valid) {
             this.loading = true;
-            this.$store.dispatch('LoginByEmail', this.loginForm).then(() => {
+            this.$store.dispatch('LoginByPhone', this.loginForm).then(() => {
               this.$Message.success('登录成功');
-              
               this.loading = false;
               this.$router.push({ path: '/' });
             }).catch(err => {
@@ -144,7 +137,6 @@
       }
     },
     init() {
-    
     },
     destroyed() {
       // window.removeEventListener('hashchange', this.afterQRScan);
@@ -273,7 +265,6 @@
           padding: 6px 5px 6px 15px;
           color: #889aa4;
       }
-
       .title {
           font-size: 26px;
           font-weight: 400;
@@ -314,7 +305,6 @@
           border-radius: 5px;
           color: #454545;
       }
-
       .forget-pwd {
           color: #fff;
       }
