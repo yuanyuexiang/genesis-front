@@ -27,7 +27,7 @@ const userMap = {
 export default {
   loginByPhone: config => {
     const { phone } = JSON.parse(config.body);
-    let user = userMap[phone]
+    let user = userMap['admin'];
     return user;
   },
   getInfo: config => {
