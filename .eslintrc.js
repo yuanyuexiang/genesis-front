@@ -34,6 +34,7 @@ module.exports = {
          * Possible Errors
          */
 
+        'linebreak-style': ["off", "windows"],
         // disallow unnecessary parentheses
         'no-extra-parens': ['error', 'all', {'nestedBinaryExpressions': false}],
 
