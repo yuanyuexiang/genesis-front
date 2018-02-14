@@ -184,8 +184,8 @@
         left: 0;
         right: 0;
         bottom:20px;
-        float: bottom;
-        position: absolute;  
+        margin-top: 150px;
+        position: relative;  
         text-align: center;
       }
       .el-form-item {
