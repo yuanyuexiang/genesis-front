@@ -67,8 +67,12 @@ const user = {
       const phone = userInfo.phone.trim();
       return new Promise((resolve, reject) => {
         loginByPhone(phone, userInfo.password).then(response => {
-          const data = response.data;
-          console.log(response.data);
+          const responseData = response.data;
+          console.log(responseData);
+          if (responseData.code !== 0) {
+            reject({ error: responseData.message });
+            return;
+          }
           Cookies.set('Admin-Token', response.data.token);
           commit('SET_TOKEN', data.token);
           commit('SET_PHONE', phone);

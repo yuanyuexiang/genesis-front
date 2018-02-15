@@ -55,10 +55,10 @@ service.interceptors.response.use(
   error => {
     console.log('err' + error);// for debug
     vue.$Message.error({
-                    message: error.message,
-                    duration: 5 * 1000,
-                    closable: true
-                });
+      message: error.message,
+      duration: 5 * 1000,
+      closable: true
+    });
     return Promise.reject(error);
   }
 )
