@@ -71,7 +71,7 @@
             this.loading = true;
             this.$store.dispatch('LoginByPhone', this.loginForm).then(() => {
               this.$Message.success('登录成功');
-              this.loading = false;
+              this.loading = true;
               this.$router.push({ path: '/' });
             }).catch(err => {
               this.$Message.error("登录失败，用户名或者密码错误！");

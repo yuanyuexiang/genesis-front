@@ -9,7 +9,7 @@ const user = {
     code: '',
     uid: undefined,
     auth_type: '',
-    token: Cookies.get('Admin-Token'),
+    token: Cookies.get('Token'),
     name: '',
     avatar: '',
     introduction: '',
@@ -68,14 +68,16 @@ const user = {
       return new Promise((resolve, reject) => {
         loginByPhone(phone, userInfo.password).then(response => {
           const responseData = response.data;
-          console.log(responseData);
+          const data = responseData.data;
+          console.log(data);
           if (responseData.code !== 0) {
             reject({ message: responseData.message });
             return;
           }
-          Cookies.set('Admin-Token', response.data.token);
-          commit('SET_TOKEN', data.token);
-          commit('SET_PHONE', phone);
+          Cookies.set('Token', data.Token);
+          commit('SET_TOKEN', data.Token);
+          // commit('SET_PHONE', phone);
+          commit('SET_UID', data.AdministratorID);
           resolve();
         }).catch(error => {
           reject(error);
@@ -86,12 +88,17 @@ const user = {
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getInfo(state.token).then(response => {
-          const data = response.data;
-          commit('SET_ROLES', data.role);
-          commit('SET_NAME', data.name);
+        getInfo(state.uid).then(response => {
+          const responseData = response.data;
+          const data = responseData.data;
+
+          // commit('SET_TOKEN', data.token);
+          commit('SET_PHONE', data.PhoneNumber);
+
+          commit('SET_ROLES', data.Role);
+          commit('SET_NAME', data.Name);
           commit('SET_AVATAR', data.avatar);
-          commit('SET_UID', data.uid);
+          // commit('SET_UID', data.uid);
           commit('SET_INTRODUCTION', data.introduction);
           resolve(response);
         }).catch(error => {
@@ -106,7 +113,7 @@ const user = {
         commit('SET_CODE', code);
         loginByThirdparty(state.status, state.email, state.code, state.auth_type).then(response => {
           commit('SET_TOKEN', response.data.token);
-          Cookies.set('Admin-Token', response.data.token);
+          Cookies.set('Token', response.data.token);
           resolve();
         }).catch(error => {
           reject(error);
@@ -120,7 +127,7 @@ const user = {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '');
           commit('SET_ROLES', []);
-          Cookies.remove('Admin-Token');
+          Cookies.remove('Token');
           resolve();
         }).catch(error => {
           reject(error);
@@ -132,8 +139,8 @@ const user = {
     FedLogOut({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '');
-        Cookies.remove('Admin-Token');
-        alert("has logout");
+        Cookies.remove('Token');
+        alert("Has logout");
         resolve();
       });
     },
@@ -143,7 +150,7 @@ const user = {
       return new Promise(resolve => {
         commit('SET_ROLES', [role]);
         commit('SET_TOKEN', role);
-        Cookies.set('Admin-Token', role);
+        Cookies.set('Token', role);
         resolve();
       })
     }

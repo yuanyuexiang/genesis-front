@@ -7,7 +7,7 @@ export function loginByPhone(phone, password) {
   };
 
   return fetch({
-    url: 'genesis/v1/session/',
+    url: 'genesis/v1/session',
     method: 'POST',
     data
   });
@@ -15,15 +15,22 @@ export function loginByPhone(phone, password) {
 
 export function logout() {
   return fetch({
-    url: 'genesis/v1/session/',
+    url: 'genesis/v1/session',
     method: 'DELETE'
   });
 }
-
+/*
 export function getInfo(token) {
   return fetch({
     url: '/user/info',
     method: 'GET',
     params: { token }
+  });
+}
+*/
+export function getInfo(uid) {
+  return fetch({
+    url: '/genesis/v1/administrator/' + uid,
+    method: 'GET'
   });
 }
