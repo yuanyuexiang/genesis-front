@@ -70,7 +70,7 @@ const user = {
           const responseData = response.data;
           console.log(responseData);
           if (responseData.code !== 0) {
-            reject({ error: responseData.message });
+            reject({ message: responseData.message });
             return;
           }
           Cookies.set('Admin-Token', response.data.token);

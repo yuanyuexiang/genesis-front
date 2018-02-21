@@ -74,8 +74,9 @@
               this.loading = false;
               this.$router.push({ path: '/' });
             }).catch(err => {
-              this.$message.error(err);
+              this.$Message.error("登录失败，用户名或者密码错误！");
               this.loading = false;
+              console.log(err);
             });
           } else {
             console.log('error submit!!');
