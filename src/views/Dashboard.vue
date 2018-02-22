@@ -264,13 +264,13 @@ export default {
     }
   },
   mounted() {
-    const token = this.$store.getters.token;
+    const roles = this.$store.getters.roles;
 
     this.$Notice.success({
-      title: "欢迎使用 WZ 框架",
-      desc: `你的账户权限是 ${token} 
+      title: "欢迎使用佑恩堂公众号管理系统",
+      desc: `你的账户权限是 ${roles} 
                             <br>
-                            喜欢就去github给个 start 鼓励一下吧`,
+                            慈爱和诚实，彼此相遇。公义和平安，彼此相亲。`,
       duration: 10
     });
   }

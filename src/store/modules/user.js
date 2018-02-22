@@ -95,7 +95,7 @@ const user = {
           // commit('SET_TOKEN', data.token);
           commit('SET_PHONE', data.PhoneNumber);
 
-          commit('SET_ROLES', data.Role);
+          commit('SET_ROLES', [data.Role]);
           commit('SET_NAME', data.Name);
           commit('SET_AVATAR', data.avatar);
           // commit('SET_UID', data.uid);
