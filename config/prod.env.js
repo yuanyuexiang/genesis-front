@@ -1,5 +1,5 @@
 module.exports = {
     NODE_ENV: '"production"',
-    BASE_API: '"https://api-prod"',
-    APP_ORIGIN: '"https://wz.com"'
+    BASE_API: '"http://test.youentang.org',
+    APP_ORIGIN: '"http://test.youentang.org"'
 };
