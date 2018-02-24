@@ -1,7 +1,10 @@
 <template>
   <navbar>
     <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button" @click="mobileSidebarToggle">&#9776;</button>
+    <p class="logo-youentang">公众号管理系统</p>
+    <!--
     <a class="navbar-brand" ></a>
+    -->
     <ul class="nav navbar-nav d-md-down-none">
       <li class="nav-item">
         <a class="nav-link navbar-toggler sidebar-toggler"  @click="sidebarMinimize">&#9776;</a>
@@ -50,11 +53,15 @@
       <Dropdown class="nav-item">
         <a href="javascript:void(0)">
           <span slot="button">
+            <!--
             <img src="static/img/avatars/6.jpg" class="img-avatar" alt="o">
-            <span class="d-md-down-none">{{roles}}</span>
+            <span class="d-md-down-none">{{userName}}你好，你的角色是{{roles}}</span>
+            -->
+            <span class="d-md-down-none">{{userName}}</span>
           </span>
         </a>
         <Dropdown-menu slot="list">
+          <!--
           <Dropdown-item>
             <p class="dropdown-itemp"><Icon type="alert"></Icon>Updates<span class="badge badge-info">42</span></p>
           </Dropdown-item>
@@ -64,12 +71,14 @@
             <Dropdown-item>
             <p class="dropdown-itemp"><Icon type="chatbox-working"></Icon>Messages<span class="badge badge-danger">42</span></p>
           </Dropdown-item>
-            <Dropdown-item divided>
-            <p class="dropdown-itemp"><Icon type="android-contact"></Icon> Profile</p>
+          -->
+          <Dropdown-item divided>
+            <p class="dropdown-itemp"><Icon type="android-contact"></Icon>用户</p>
             </Dropdown-item>
           <Dropdown-item >
-            <p class="dropdown-itemp"><Icon type="android-settings"></Icon> Settings</p>
+            <p class="dropdown-itemp"><Icon type="android-settings"></Icon>设置</p>
           </Dropdown-item>
+          
           <Dropdown-item >
             <a href="" @click="Logout">
               <p class="dropdown-itemp"><Icon type="power"></Icon>注销</p>
@@ -91,7 +100,8 @@ export default {
   name: 'header',
   data(){
     return{
-      roles:this.$store.getters.roles.toString()
+      roles:this.$store.getters.roles.toString(),
+      userName:this.$store.getters.name
     }
   },
   components: {
@@ -130,6 +140,12 @@ export default {
 </script>
 
 <style type="text/css" scoped>
+  .logo-youentang{
+    text-align: left;
+    font-size: 25px;
+    padding: 10px;
+    color:white;
+  }
   .dropdown-itemp{
     text-align: left;
     font-size: 15px;

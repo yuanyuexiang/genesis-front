@@ -66,7 +66,7 @@ export const asyncRouterMap = [
                     { path: 'upload', name: 'Upload上传', icon: 'ios-cloud-upload-outline', component: _import('components/Upload') }
         ]
       },
-      */
+      *//*
       { path: '/charts', name: 'echart图表', redirect: '/charts/shopchart', icon: 'pie-graph',
         component: { render(c) { return c('router-view') } },
         children: [
@@ -74,7 +74,7 @@ export const asyncRouterMap = [
                     { path: 'radarchart', name: '雷达图', icon: 'arrow-graph-up-right', component: _import('charts/RadarChart') },
                     { path: 'cakechart', name: '蛋糕销量图表', icon: 'ios-analytics', component: _import('charts/CakeChart') }
         ]
-      }/*
+      }
       { path: '/table', name: '表格综合实例', icon: 'ios-paper', component: _import('Table'), meta: { role: ['admin'] } },
       { path: '/jsontree', name: 'JSON视图', icon: 'merge', component: _import('JsonTree') },
       { path: '/tabledetail/:id', name: 'TableDetail', hidden: true, component: _import('TableDetail') },

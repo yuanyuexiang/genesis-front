@@ -1,5 +1,6 @@
 <template>
     <div class="animated fadeIn">
+      <!--
         <Row>
             <Col :sm="24" :md="8">
             <h3>👍WZ后台管理框架👍</h3>
@@ -223,6 +224,7 @@
             </div>
             </Col>
         </Row>
+        -->
     </div>
 </template>
 
@@ -251,7 +253,7 @@ export default {
       speed: 10000
     };
   },
-  methods: {
+  /*methods: {
     test_logout() {
       this.$store
         .dispatch("LogOut")
@@ -262,7 +264,7 @@ export default {
           this.$message.error(err);
         });
     }
-  },
+  },*/
   mounted() {
     const roles = this.$store.getters.roles;
 
