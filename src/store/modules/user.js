@@ -1,5 +1,6 @@
 import { loginByPhone, logout, getInfo } from 'api/login';
 import Cookies from 'js-cookie';
+import md5 from 'js-md5';
 
 const user = {
   state: {
@@ -66,7 +67,7 @@ const user = {
     LoginByPhone({ commit }, userInfo) {
       const phone = userInfo.phone.trim();
       return new Promise((resolve, reject) => {
-        loginByPhone(phone, userInfo.password).then(response => {
+        loginByPhone(phone, md5(userInfo.password)).then(response => {
           const responseData = response.data;
           const data = responseData.data;
           console.log(data);
