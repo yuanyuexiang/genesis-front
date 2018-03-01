@@ -141,7 +141,7 @@ const user = {
       return new Promise(resolve => {
         commit('SET_TOKEN', '');
         Cookies.remove('Token');
-        alert("Has logout");
+        //alert("Has logout");
         resolve();
       });
     },
