@@ -7,7 +7,7 @@ const user = {
     status: '',
     phone: '',
     code: '',
-    uid: undefined,
+    uid: Cookies.get('UID'),
     auth_type: '',
     token: Cookies.get('Token'),
     name: '',
@@ -78,6 +78,7 @@ const user = {
           commit('SET_TOKEN', data.Token);
           // commit('SET_PHONE', phone);
           commit('SET_UID', data.AdministratorID);
+          Cookies.set('UID', data.AdministratorID);
           resolve();
         }).catch(error => {
           reject(error);
