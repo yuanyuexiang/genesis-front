@@ -1,10 +1,4 @@
 // expand-row.vue
-<style scoped>
-    .expand-row{
-        margin-bottom: 16px;
-    }
-  
-</style>
 <template>
     <Steps :current="1"   v-if="row.task_status===0" >
         <Step title="已上传" ></Step>
@@ -27,3 +21,9 @@
         }
     };
 </script>
+<style scoped>
+    .expand-row{
+        margin-bottom: 16px;
+    }
+  
+</style>

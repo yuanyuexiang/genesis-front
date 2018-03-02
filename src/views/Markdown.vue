@@ -1,17 +1,19 @@
 <template>
-  <div class="components-container">
+    <div class="components-container">
 
-<h3 class="intro-head">超赞的👍  <a href="https://github.com/hinesboy/mavonEditor" target="_blank">mavonEditor</a> </h3>
+        <h3 class="intro-head">超赞的👍
+            <a href="https://github.com/hinesboy/mavonEditor" target="_blank">mavonEditor</a>
+        </h3>
 
-    <mavon-editor  style="  margin-top: 50px" v-model="content"/>
-  </div>
+        <mavon-editor style="  margin-top: 50px" v-model="content" />
+    </div>
 </template>
 
 <script>
- import  { mavonEditor } from 'mavon-editor';
+import { mavonEditor } from "mavon-editor";
 
- import 'mavon-editor/dist/css/index.css';
-    
+import "mavon-editor/dist/css/index.css";
+
 export default {
   components: { mavonEditor },
   data() {
@@ -203,20 +205,20 @@ HTML 规范由 W3C 维护
 
 
 `
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>
-.editor-content{
+.editor-content {
 }
-  .intro-head{
-    text-align: center;
-    margin: 10px;
-  }
-.v-note-wrapper{
-  z-index:1 !important;
+.intro-head {
+  text-align: center;
+  margin: 10px;
+}
+.v-note-wrapper {
+  z-index: 1 !important;
 }
 </style>
 

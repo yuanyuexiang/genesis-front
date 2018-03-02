@@ -1,6 +1,6 @@
 <template>
-    <div class="animated fadeIn">
-      <!--
+  <div class="animated fadeIn">
+    <!--
         <Row>
             <Col :sm="24" :md="8">
             <h3>👍WZ后台管理框架👍</h3>
@@ -225,7 +225,7 @@
             </Col>
         </Row>
         -->
-    </div>
+  </div>
 </template>
 
 <script>
