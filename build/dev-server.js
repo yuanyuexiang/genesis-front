@@ -11,7 +11,6 @@ var webpack = require('webpack');
 var proxyMiddleware = require('http-proxy-middleware');
 var webpackConfig = require('./webpack.dev.conf');
 
-
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port;
 // automatically open browser, if not set will be false
@@ -63,8 +62,6 @@ app.use(devMiddleware);
 // compilation error display
 app.use(hotMiddleware);
 
-
-
 // serve pure static assets
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory);
 app.use(staticPath, express.static('./static'));
@@ -75,13 +72,6 @@ var uri = 'http://localhost:' + port
 devMiddleware.waitUntilValid(function () {
     console.log('> Listening at ' + uri + '\n')
 });
-
-
-
-
-
-
-
 
 module.exports = app.listen(port, function (err) {
     if (err) {

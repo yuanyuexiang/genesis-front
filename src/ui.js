@@ -5,7 +5,7 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 Vue.use(iView);
 
-import TreeView from "vue-json-tree-view";
+import TreeView from 'vue-json-tree-view';
 Vue.use(TreeView);
 
 import ECharts from 'vue-echarts/components/ECharts.vue'
