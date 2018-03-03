@@ -314,6 +314,8 @@ module.exports = {
         'template-curly-spacing': 'error',
 
         // require or disallow spacing around the * in yield* expressions
-        'yield-star-spacing': 'error'
+        'yield-star-spacing': 'error',
+
+        'vue/no-parsing-error': [2, { 'x-invalid-end-tag': false }]
     }
 }

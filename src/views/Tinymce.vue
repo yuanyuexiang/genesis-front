@@ -19,10 +19,9 @@
 
         <Row :gutter="20">
             <Col :span="12">
-            <Button type="primary" @click="show_content1_html=!show_content1_html">点击切换显示内容</Button>
-            <div v-html='content1' v-if="!show_content1_html"></div>
-            <div v-else>{{content1}}</div>
-
+                <Button type="primary" @click="show_content1_html=!show_content1_html">点击切换显示内容</Button>
+                <div v-html='content1' v-if="!show_content1_html"></div>
+                <div v-else>{{content1}}</div>
             </Col>
             <Col :span="12">
             <Button type="primary" @click="show_content2_html=!show_content2_html">点击切换显示内容</Button>
