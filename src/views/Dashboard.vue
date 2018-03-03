@@ -1,6 +1,6 @@
 <template>
-  <div class="animated fadeIn">
-    <!--
+    <div class="animated fadeIn">
+        <!--
         <Row>
             <Col :sm="24" :md="8">
             <h3>👍WZ后台管理框架👍</h3>
@@ -225,7 +225,7 @@
             </Col>
         </Row>
         -->
-  </div>
+    </div>
 </template>
 
 <script>
@@ -236,46 +236,46 @@ import VueCalendar from "./components/VueCalendar";
 import TodoList from "@/components/TodoList";
 
 export default {
-  components: {
-    DashChartCount,
-    DashChartVisitor,
-    DashChartLarge,
-    VueCalendar,
-    TodoList
-  },
-  name: "dashboard",
-  data() {
-    return {
-      value1: 0,
-      value2: 0,
-      value3: 0,
+    components: {
+        DashChartCount,
+        DashChartVisitor,
+        DashChartLarge,
+        VueCalendar,
+        TodoList
+    },
+    name: "dashboard",
+    data() {
+        return {
+        value1: 0,
+        value2: 0,
+        value3: 0,
 
-      speed: 10000
-    };
-  },
-  /*methods: {
-    test_logout() {
-      this.$store
-        .dispatch("LogOut")
-        .then(() => {
-          this.$router.push({ path: "/login" });
-        })
-        .catch(err => {
-          this.$message.error(err);
+        speed: 10000
+        };
+    },
+    /*methods: {
+        test_logout() {
+        this.$store
+            .dispatch("LogOut")
+            .then(() => {
+            this.$router.push({ path: "/login" });
+            })
+            .catch(err => {
+            this.$message.error(err);
+            });
+        }
+    },*/
+    mounted() {
+        const roles = this.$store.getters.roles;
+
+        this.$Notice.success({
+        title: "欢迎使用佑恩堂公众号管理系统",
+        desc: `你的账户权限是 ${roles} 
+                                <br>
+                                慈爱和诚实，彼此相遇。公义和平安，彼此相亲。`,
+        duration: 10
         });
     }
-  },*/
-  mounted() {
-    const roles = this.$store.getters.roles;
-
-    this.$Notice.success({
-      title: "欢迎使用佑恩堂公众号管理系统",
-      desc: `你的账户权限是 ${roles} 
-                            <br>
-                            慈爱和诚实，彼此相遇。公义和平安，彼此相亲。`,
-      duration: 10
-    });
-  }
 };
 </script>
 <style type="text/css">

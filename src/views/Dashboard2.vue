@@ -279,38 +279,38 @@ import VueCalendar from "./components/VueCalendar";
 import TodoList from "@/components/TodoList";
 
 export default {
-  components: {
-    DashChartCount,
-    DashChartVisitor,
-    DashChartLarge,
-    VueCalendar,
-    TodoList
-  },
-  name: "dashboard",
-  data() {
-    return {
-      value1: 0,
-      value2: 0,
-      value3: 0,
+    components: {
+        DashChartCount,
+        DashChartVisitor,
+        DashChartLarge,
+        VueCalendar,
+        TodoList
+    },
+    name: "dashboard",
+    data() {
+        return {
+        value1: 0,
+        value2: 0,
+        value3: 0,
 
-      speed: 10000
-    };
-  },
-  methods: {
-    test_logout() {
-      this.$store
-        .dispatch("LogOut")
-        .then(() => {
-          this.$router.push({ path: "/login" });
-        })
-        .catch(err => {
-          this.$message.error(err);
-        });
+        speed: 10000
+        };
+    },
+    methods: {
+        test_logout() {
+        this.$store
+            .dispatch("LogOut")
+            .then(() => {
+            this.$router.push({ path: "/login" });
+            })
+            .catch(err => {
+            this.$message.error(err);
+            });
+        }
+    },
+    mounted() {
+        const token = this.$store.getters.token;
     }
-  },
-  mounted() {
-    const token = this.$store.getters.token;
-  }
 };
 </script>
 
