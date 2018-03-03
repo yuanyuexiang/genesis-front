@@ -1,7 +1,9 @@
 <template>
     <navbar>
         <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button" @click="mobileSidebarToggle">&#9776;</button>
-        <p class="logo-youentang">公众号管理系统</p>
+        <router-link to="/">
+            <p class="logo-youentang">公众号管理系统</p>
+        </router-link>
         <!--
     <a class="navbar-brand" ></a>
     -->
@@ -61,6 +63,7 @@
             <span class="d-md-down-none">{{userName}}你好，你的角色是{{roles}}</span>
             -->
                         <span class="d-md-down-none">{{userName}}</span>
+                        <span class="d-md-down-none">你好！</span>
                     </span>
                 </a>
                 <Dropdown-menu slot="list">
@@ -76,8 +79,10 @@
           </Dropdown-item>
           -->
                     <Dropdown-item divided>
-                        <p class="dropdown-itemp">
-                            <Icon type="android-contact"></Icon>用户</p>
+                        <router-link tag="div" to='/administrator' class="nav-link">
+                            <p class="dropdown-itemp">
+                                <Icon type="android-contact"></Icon>用户</p>
+                        </router-link>
                     </Dropdown-item>
                     <Dropdown-item>
                         <p class="dropdown-itemp">

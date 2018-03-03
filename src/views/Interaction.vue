@@ -1,16 +1,9 @@
 <template>
-    <div class="animated fadeIn">
-        <Row>
-            <Col :md="24">
-                <h3 style="text-align:center">系统介绍</h3>
-            </Col>
-        </Row>
-        <Row>
-            <Col span="24">
-                <h3 style="text-align:center">系统介绍</h3>
-            </Col>
-        </Row>
-    </div>
+    <Tabs>
+        <TabPane label="欢迎词" icon="ribbon-b">欢迎词</TabPane>
+        <TabPane label="默认回复" icon="reply">默认回复</TabPane>
+        <TabPane label="关键词回复" icon="key">关键词回复</TabPane>
+    </Tabs>
 </template>
 
 <script>

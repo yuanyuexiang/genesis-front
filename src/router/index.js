@@ -40,13 +40,22 @@ export default new Router({
 export const asyncRouterMap = [
     {
         path: '/',
-        redirect: '/dashboard',
+        redirect: '/introduction',
         name: '首页',
         component: Full,
         hidden: false,
         children: [
-            { path: '/dashboard', name: 'Dashboard', icon: 'speedometer', component: _import('Dashboard') },
+            { path: '/introduction', name: '系统介绍', icon: 'thumbsup', component: _import('Introduction') },
+            { path: '/interaction', name: '微互动', icon: 'link', component: _import('Interaction') },
+            { path: '/menu', name: '自定义菜单', icon: 'android-menu', component: _import('CoustomMenu') },
+            { path: '/announcement', name: '群发功能', icon: 'speakerphone', component: _import('Announcement') },
+            { path: '/user', name: '用户管理', icon: 'ios-people', component: _import('UserManage') },
+            { path: '/message', name: '消息管理', icon: 'chatbox-working', component: _import('MessageManage') },
+            { path: '/material', name: '素材管理', icon: 'mic-c', component: _import('MaterialManage') }
             /*
+            { path: '/dashboard', name: 'Dashboard', icon: 'speedometer', component: _import('Dashboard') },
+            { path: '/infomation', name: '我的信息', icon: '', component: _import('Administrator') }
+            
             { path: '/introduction', name: '介绍', icon: 'thumbsup', component: _import('Introduction') },
             { path: '/components', name: 'component组件', redirect: '/components/buttons', icon: 'bookmark',
               component: { render(c) { return c('router-view') } },
@@ -93,6 +102,16 @@ export const asyncRouterMap = [
         children: [
             { path: '/home1/dashboard', name: 'Dashboard2', icon: 'speedometer', component: _import('Dashboard2') },
             { path: '/home1/introduction', name: '介绍2', icon: 'thumbsup', component: _import('Introduction') }
+        ]
+    },
+    {
+        path: '/administrator',
+        redirect: '/administrator/infomation',
+        name: '管理员',
+        component: Full,
+        hidden: false,
+        children: [
+            { path: '/administrator/infomation', name: '我的信息', icon: '', component: _import('Administrator') }
         ]
     },
 
