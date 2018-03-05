@@ -4,50 +4,11 @@
         <router-link to="/">
             <p class="logo-youentang">公众号管理系统</p>
         </router-link>
-        <!--
-    <a class="navbar-brand" ></a>
-    -->
         <ul class="nav navbar-nav d-md-down-none">
             <li class="nav-item">
                 <a class="nav-link navbar-toggler sidebar-toggler" @click="sidebarMinimize">&#9776;</a>
             </li>
         </ul>
-        <!--
-    <ul class="nav navbar-nav d-md-down-none">
-      <li class="nav-item header-item">
-        <router-link tag="div" to='/'  style="height:55px;" class="nav-link">
-            <p><Icon type="compose" size='30' color="#2d8cf0"></Icon></p>
-            <p style="color:white">留言管理</p>
-        </router-link> 
-      </li>
-        <li class="nav-item header-item">
-        <router-link tag="div" to='/home1'  style="height:55px;" class="nav-link">
-            <p><Icon type="stats-bars" size='30' color="#2d8cf0"></Icon></p>
-            <p  style="color:white">浏览排行</p>
-        </router-link> 
-      </li>
-      <li class="nav-item header-item">
-        <Dropdown>
-          <router-link tag="div" to='/'  style="height:55px;" class="nav-link">
-            <p><Icon type="android-cloud" size='30' color="#2d8cf0"></Icon></p>
-            <p style="color:white">云服务器</p>
-          </router-link>
-          <DropdownMenu slot="list">
-            <DropdownItem>Linux</DropdownItem>
-            <DropdownItem>Mac OS X</DropdownItem>
-            <DropdownItem>Windows</DropdownItem>
-            <DropdownItem>Core OS</DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-      </li>
-      <li class="nav-item header-item">
-        <router-link tag="div" to='/home1'  style="height:55px;" class="nav-link">
-            <p><Icon type="trophy" size='30' color="#2d8cf0"></Icon></p>
-            <p style="color:white">销量排行</p>
-        </router-link> 
-      </li>
-    </ul>
-    -->
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item d-md-down-none">
                 <a class="nav-link">
@@ -58,26 +19,11 @@
             <Dropdown class="nav-item">
                 <a href="javascript:void(0)">
                     <span slot="button">
-                        <!--
-            <img src="static/img/avatars/6.jpg" class="img-avatar" alt="o">
-            <span class="d-md-down-none">{{userName}}你好，你的角色是{{roles}}</span>
-            -->
                         <span class="d-md-down-none">{{userName}}</span>
                         <span class="d-md-down-none">你好！</span>
                     </span>
                 </a>
                 <Dropdown-menu slot="list">
-                    <!--
-          <Dropdown-item>
-            <p class="dropdown-itemp"><Icon type="alert"></Icon>Updates<span class="badge badge-info">42</span></p>
-          </Dropdown-item>
-          <Dropdown-item>
-            <p class="dropdown-itemp"><Icon type="chatbox-working"></Icon>Messages<span class="badge badge-success">42</span></p>
-          </Dropdown-item>
-            <Dropdown-item>
-            <p class="dropdown-itemp"><Icon type="chatbox-working"></Icon>Messages<span class="badge badge-danger">42</span></p>
-          </Dropdown-item>
-          -->
                     <Dropdown-item divided>
                         <router-link tag="div" to='/administrator' class="nav-link">
                             <p class="dropdown-itemp">

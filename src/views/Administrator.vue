@@ -1,118 +1,111 @@
 <template>
     <Tabs value="name1">
         <TabPane label="个人资料" name="name1">
-            <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-                <FormItem label="Name" prop="name">
-                    <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
+            <Form ref="formValidate" :model="administrator" :label-width="100">
+                <FormItem label="账号/手机号：" prop="name" class="myLable">
+                    <span class="myLable">{{administrator.phone}}</span>
+                    <a class="navbar-togglerk" @click="modalPhone = true">
+                        <Icon type="edit" class="myIcon"></Icon>
+                    </a>
+                    <Modal v-model="modalPhone" title="修改账号/手机号" @on-ok="ok" @on-cancel="cancel">
+                        <Form :model="formItem" :label-width="80">
+                            <Form-item label="新手机号">
+                                <Input placeholder="请输入手机号"></Input>
+                            </Form-item>
+                        </Form>
+                    </Modal>
                 </FormItem>
-                <FormItem label="E-mail" prop="mail">
-                    <Input v-model="formValidate.mail" placeholder="Enter your e-mail"></Input>
+                <FormItem label="昵称：" prop="mail" class="myLable">
+                    <span class="myLable">{{administrator.name}}</span>
+                    <a class="navbar-togglerk" @click="modalName = true">
+                        <Icon type="edit" class="myIcon"></Icon>
+                    </a>
+                    <Modal v-model="modalName" title="修改昵称" @on-ok="ok" @on-cancel="cancel">
+                        <Form :model="formItem" :label-width="80">
+                            <Form-item label="新昵称">
+                                <Input placeholder="请输入昵称"></Input>
+                            </Form-item>
+                        </Form>
+                    </Modal>
                 </FormItem>
-                <FormItem label="City" prop="city">
-                    <Select v-model="formValidate.city" placeholder="Select your city">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
-                    </Select>
+                <FormItem label="密码：" prop="mail" class="myLable">
+                    <span class="myLable">******</span>
+                    <a class="navbar-togglerk" @click="modalPassword = true">
+                        <Icon type="edit" class="myIcon"></Icon>
+                    </a>
+                    <Modal v-model="modalPassword" title="修改密码" @on-ok="ok" @on-cancel="cancel">
+                        <Form :model="formItem" :label-width="80">
+                            <Form-item label="旧密码">
+                                <Input placeholder="请输入旧密码"></Input>
+                            </Form-item>
+                            <Form-item label="新密码">
+                                <Input placeholder="请输入新密码"></Input>
+                            </Form-item>
+                        </Form>
+                    </Modal>
                 </FormItem>
-                <FormItem label="Date">
-                    <Row>
-                        <Col span="11">
-                        <FormItem prop="date">
-                            <DatePicker type="date" placeholder="Select date" v-model="formValidate.date"></DatePicker>
-                        </FormItem>
-                        </Col>
-                        <Col span="2" style="text-align: center">-</Col>
-                        <Col span="11">
-                        <FormItem prop="time">
-                            <TimePicker type="time" placeholder="Select time" v-model="formValidate.time"></TimePicker>
-                        </FormItem>
-                        </Col>
-                    </Row>
+                <FormItem label="角色：" prop="mail" class="myLable">
+                    <span class="myLable">{{administrator.roles}}</span>
+                    <a class="navbar-togglerk" @click="modalRoles = true">
+                        <Icon type="edit" class="myIcon"></Icon>
+                    </a>
+                    <Modal v-model="modalRoles" title="修改权限角色" @on-ok="ok" @on-cancel="cancel">
+                        <!--
+                        <Form :model="formItem" :label-width="80">
+                            <Form-item label="当前角色">
+                                <Radio-group v-model="formItem.radio">
+                                    <Radio label="male">记者</Radio>
+                                    <Radio label="female">编辑</Radio>
+                                    <Radio label="female">工程师</Radio>
+                                </Radio-group>
+                            </Form-item>
+                        </Form>
+                        -->
+                        <span>无权修改</span>
+                    </Modal>
                 </FormItem>
-                <FormItem label="Gender" prop="gender">
-                    <RadioGroup v-model="formValidate.gender">
-                        <Radio label="male">Male</Radio>
-                        <Radio label="female">Female</Radio>
-                    </RadioGroup>
-                </FormItem>
-                <FormItem label="Hobby" prop="interest">
-                    <CheckboxGroup v-model="formValidate.interest">
-                        <Checkbox label="Eat"></Checkbox>
-                        <Checkbox label="Sleep"></Checkbox>
-                        <Checkbox label="Run"></Checkbox>
-                        <Checkbox label="Movie"></Checkbox>
-                    </CheckboxGroup>
-                </FormItem>
-                <FormItem label="Desc" prop="desc">
-                    <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
-                </FormItem>
-                <FormItem>
-                    <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
-                    <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
+                <FormItem label="状态：" prop="mail" class="myLable">
+                    <span class="myLable">已激活</span>
+                    <a class="navbar-togglerk" @click="modalStatus = true">
+                        <Icon type="edit" class="myIcon"></Icon>
+                    </a>
+                    <Modal v-model="modalStatus" title="修改权限角色" @on-ok="ok" @on-cancel="cancel">
+                        <span>无权修改</span>
+                    </Modal>
                 </FormItem>
             </Form>
         </TabPane>
     </Tabs>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                formValidate: {
-                    name: '',
-                    mail: '',
-                    city: '',
-                    gender: '',
-                    interest: [],
-                    date: '',
-                    time: '',
-                    desc: ''
-                },
-                ruleValidate: {
-                    name: [
-                        { required: true, message: 'The name cannot be empty', trigger: 'blur' }
-                    ],
-                    mail: [
-                        { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
-                        { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
-                    ],
-                    city: [
-                        { required: true, message: 'Please select the city', trigger: 'change' }
-                    ],
-                    gender: [
-                        { required: true, message: 'Please select gender', trigger: 'change' }
-                    ],
-                    interest: [
-                        { required: true, type: 'array', min: 1, message: 'Choose at least one hobby', trigger: 'change' },
-                        { type: 'array', max: 2, message: 'Choose two hobbies at best', trigger: 'change' }
-                    ],
-                    date: [
-                        { required: true, type: 'date', message: 'Please select the date', trigger: 'change' }
-                    ],
-                    time: [
-                        { required: true, type: 'date', message: 'Please select time', trigger: 'change' }
-                    ],
-                    desc: [
-                        { required: true, message: 'Please enter a personal introduction', trigger: 'blur' },
-                        { type: 'string', min: 20, message: 'Introduce no less than 20 words', trigger: 'blur' }
-                    ]
-                }
-            }
-        },
-        methods: {
-            handleSubmit (name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        this.$Message.success('Success!');
-                    } else {
-                        this.$Message.error('Fail!');
-                    }
-                })
-            },
-            handleReset (name) {
-                this.$refs[name].resetFields();
-            }
-        }
-    }
+export default {
+  data() {
+    return {
+      administrator: {
+        roles: this.$store.getters.roles.toString(),
+        name: this.$store.getters.name,
+        phone: this.$store.getters.phone,
+        uid: this.$store.getters.uid
+      },
+      modalPhone: false,
+      modalName: false,
+      modalPassword: false,
+      modalRoles: false,
+      modalStatus: false
+    };
+  },
+  methods: {}
+};
 </script>
+<style scoped>
+.myLable {
+  background: lightyellow;
+  border-radius: 5px;
+}
+.myIcon {
+  transform: translateY(-50%);
+  top: 50%;
+  right: 10px;
+  position: absolute;
+}
+</style>
