@@ -111,7 +111,8 @@ export const asyncRouterMap = [
         component: Full,
         hidden: false,
         children: [
-            { path: '/administrator/infomation', name: '我的信息', icon: '', component: _import('Administrator') }
+            { path: '/administrator/infomation', name: '我的信息', icon: '', component: _import('Administrator') },
+            { path: '/administrator/administratorManage', name: '管理员管理', icon: '', component: _import('AdministratorManage') }
         ]
     },
 

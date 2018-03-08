@@ -94,7 +94,14 @@ export default {
       modalStatus: false
     };
   },
-  methods: {}
+  methods: {
+    ok() {
+      this.$Message.info("Clicked ok");
+    },
+    cancel() {
+      this.$Message.info("Clicked cancel");
+    }
+  }
 };
 </script>
 <style scoped>
