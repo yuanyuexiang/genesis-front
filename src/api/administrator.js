@@ -59,8 +59,8 @@ export function listAdministrator(limit, offset) {
         offset
     };
     return fetch({
-        url: '/genesis/v1/administrator/' + uid,
-        method: 'DELETE',
+        url: '/genesis/v1/administrator',
+        method: 'GET',
         data
     });
 }

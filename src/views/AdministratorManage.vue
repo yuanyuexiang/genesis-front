@@ -3,11 +3,11 @@
         <Row>
             <Col :md="24">
             <div>
-                <div id="container" style="margin-bottom:1px;">
-                    <p>
-                        <span class="listAdministrator">当前系统所有的管理员</span>
+                <div id="container" >
+                    
+                        <span class="allAdministrator">当前系统所有的管理员</span>
                         <span class="addAdministrator">+添加管理员</span>
-                    </p>
+                  
                 </div>
                 <div style="position:relative;">
                     <Table stripe :columns="columns" :data="administratorData" ref="table"></Table>
@@ -23,7 +23,7 @@
             </Col>
         </Row>
         <Modal v-model="modalPhone" title="修改账号/手机号" @on-ok="ok" @on-cancel="cancel">
-            <Form :model="formItem" :label-width="80">
+            <Form :label-width="80">
                 <Form-item label="新手机号">
                     <Input placeholder="请输入手机号"></Input>
                 </Form-item>
@@ -33,6 +33,15 @@
 </template>
 
 <script>
+import {
+  saveAdministrator,
+  getAdministrator,
+  updateAdministrator,
+  updateAdministratorRole,
+  updateAdministratorPassword,
+  deleteAdministrator,
+  listAdministrator
+} from "api/administrator";
 var vue;
 var uploader;
 
@@ -44,27 +53,27 @@ export default {
       progresscount: 0,
       progresstatus: "active",
       progressspeed: 0,
-        modalPhone: false,
+      modalPhone: false,
       pageindex: 1,
-      page_video_list: [],
       lodding: false,
       list_loadding: false,
+      formItem: "",
       columns: [
         {
           title: "账号/手机号",
-          key: "phone"
+          key: "PhoneNumber"
         },
         {
           title: "昵称",
-          key: "name"
+          key: "Name"
         },
         {
           title: "角色",
-          key: "role"
+          key: "Role"
         },
         {
           title: "状态",
-          key: "status"
+          key: "Status"
         },
         {
           title: "操作",
@@ -129,32 +138,56 @@ export default {
   }, //data
   methods: {
     setInitPage(page) {
-      this.page_video_list = [];
       this.pageindex = page;
-      let video_list = this.video_list;
-      for (let i = (page - 1) * 10; i < (page - 1) * 10 + 10; i++) {
-        if (i < video_list.length) {
-          this.page_video_list.push(this.video_list[i]);
-        }
-      }
+
+      listAdministrator(page);
+    },
+    ok: () => {
+      this.remove(params.index);
+    },
+    cancel: () => {},
+    listAllAdministrator(page) {
+      listAdministrator(10, page)
+        .then(response => {
+          const responseData = response.data;
+          console.log(responseData);
+          console.log("-------------------");
+          const data = responseData.data;
+          console.log(data);
+          this.administratorData = data.list;
+          this.list_loadding = false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      setTimeout(function() {
+        this.list_loadding = false;
+      }, 2000);
     }
   },
   mounted() {
     const vue = this;
 
     this.list_loadding = true;
-    setTimeout(function() {
-      vue.list_loadding = false;
-    }, 2000);
-    this.setInitPage(1);
+
+    this.listAllAdministrator(1);
+    /*
+    listAdministrator(10,0).then(response => {
+                    const responseData = response.data;
+                    const data = responseData.data;
+                    console.log(data);
+                }).catch(error => {
+                    console.log(error);
+                });
+                */
   }
 };
 </script>
 
 <style type="text/css" scoped>
-.listAdministrator {
+.allAdministrator {
   display: inline-block;
-  width: 50%;
+  width: 49%;
   color: #2d8cf0;
   margin-top: 10px;
 }
