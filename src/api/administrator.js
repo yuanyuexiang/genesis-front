@@ -1,66 +1,98 @@
 import fetch from 'utils/fetch';
 
-export function saveAdministrator(parameter) {
-
+export function saveAdministrator(data) {
     return fetch({
         url: '/genesis/v1/administrator',
-        method: 'POST',
-        parameter
+        method: 'post',
+        data
     });
 }
 
 export function getAdministrator(administratorID) {
     return fetch({
         url: '/genesis/v1/administrator/' + administratorID,
-        method: 'GET'
+        method: 'get'
     });
 }
 
-export function updateAdministrator(administratorID, parameter) {
+export function updateAdministrator(administratorID, data) {
     return fetch({
-        url: '/genesis/v1/administrator' + administratorID,
-        method: 'PUT',
-        parameter
+        url: '/genesis/v1/administrator/' + administratorID,
+        method: 'put',
+        data
+    });
+}
+
+export function updateAdministratorPhoneNumber(administratorID, phoneNumber) {
+    const data = {
+        PhoneNumber: phoneNumber
+    }
+    return fetch({
+        url: '/genesis/v1/administrator/' + administratorID + '/phoneNumber',
+        method: 'put',
+        data
+    });
+}
+
+export function updateAdministratorName(administratorID, name) {
+    const data = {
+        Name: name
+    }
+    return fetch({
+        url: '/genesis/v1/administrator/' + administratorID + '/name',
+        method: 'put',
+        data
     });
 }
 
 export function updateAdministratorRole(administratorID, role) {
-    const parameter = {
+    const data = {
         Role: role
     }
     return fetch({
-        url: '/genesis/v1/administrator' + administratorID + '/role',
-        method: 'PUT',
-        parameter
+        url: '/genesis/v1/administrator/' + administratorID + '/role',
+        method: 'put',
+        data
     });
 }
 
 export function updateAdministratorPassword(administratorID, password) {
-    const parameter = {
+    const data = {
         Role: password
     }
     return fetch({
-        url: '/genesis/v1/administrator' + administratorID + '/password',
-        method: 'PUT',
-        parameter
+        url: '/genesis/v1/administrator/' + administratorID + '/password',
+        method: 'put',
+        data
+    });
+}
+
+export function updateAdministratorStatus(administratorID, status) {
+    const data = {
+        Status: status
+    }
+    return fetch({
+        url: '/genesis/v1/administrator/' + administratorID + '/status',
+        method: 'put',
+        data
     });
 }
 
 export function deleteAdministrator(administratorID) {
     return fetch({
         url: '/genesis/v1/administrator/' + administratorID,
-        method: 'DELETE'
+        method: 'delete'
     });
 }
 
 export function listAdministrator(limit, offset) {
-    const data = {
+    const params = {
         limit,
         offset
     };
     return fetch({
         url: '/genesis/v1/administrator',
-        method: 'GET',
-        data
+        method: 'get',
+        params
     });
 }

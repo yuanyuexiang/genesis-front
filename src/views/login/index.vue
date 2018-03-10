@@ -55,7 +55,9 @@ export default {
         phone: [
           { required: true, trigger: "blur", validator: validatePhoneNumber }
         ],
-        password: [{ required: true, trigger: "blur", validator: validatePass }]
+        password: [
+          { required: true, trigger: "blur", validator: validatePass }
+        ]
       },
       loading: false,
       showDialog: false

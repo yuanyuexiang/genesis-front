@@ -7,10 +7,10 @@
                     <a class="navbar-togglerk" @click="modalPhone = true">
                         <Icon type="edit" class="myIcon"></Icon>
                     </a>
-                    <Modal v-model="modalPhone" title="修改账号/手机号" @on-ok="ok" @on-cancel="cancel">
-                        <Form :model="formItem" :label-width="80">
+                    <Modal v-model="modalPhone" title="修改账号/手机号" @on-ok="onChangeAdministratorPhoneNumber()" @on-cancel="cancel">
+                        <Form :model="administratorChange" :label-width="80">
                             <Form-item label="新手机号">
-                                <Input placeholder="请输入手机号"></Input>
+                                <Input v-model="administratorChange.PhoneNumber" placeholder="请输入手机号"></Input>
                             </Form-item>
                         </Form>
                     </Modal>
@@ -20,10 +20,10 @@
                     <a class="navbar-togglerk" @click="modalName = true">
                         <Icon type="edit" class="myIcon"></Icon>
                     </a>
-                    <Modal v-model="modalName" title="修改昵称" @on-ok="ok" @on-cancel="cancel">
-                        <Form :model="formItem" :label-width="80">
+                    <Modal v-model="modalName" title="修改昵称" @on-ok="onChangeAdministratorPhoneName()" @on-cancel="cancel">
+                        <Form :model="administratorChange" :label-width="80">
                             <Form-item label="新昵称">
-                                <Input placeholder="请输入昵称"></Input>
+                                <Input v-model="administratorChange.Name" placeholder="请输入昵称"></Input>
                             </Form-item>
                         </Form>
                     </Modal>
@@ -33,13 +33,10 @@
                     <a class="navbar-togglerk" @click="modalPassword = true">
                         <Icon type="edit" class="myIcon"></Icon>
                     </a>
-                    <Modal v-model="modalPassword" title="修改密码" @on-ok="ok" @on-cancel="cancel">
-                        <Form :model="formItem" :label-width="80">
-                            <Form-item label="旧密码">
-                                <Input placeholder="请输入旧密码"></Input>
-                            </Form-item>
+                    <Modal v-model="modalPassword" title="修改密码" @on-ok="onChangeAdministratorPassword()" @on-cancel="cancel">
+                        <Form :model="administratorChange" :label-width="80">
                             <Form-item label="新密码">
-                                <Input placeholder="请输入新密码"></Input>
+                                <Input v-model="administratorChange.PhoneNumber" placeholder="请输入新密码"></Input>
                             </Form-item>
                         </Form>
                     </Modal>
@@ -78,11 +75,35 @@
     </Tabs>
 </template>
 <script>
+import {
+  saveAdministrator,
+  getAdministrator,
+  updateAdministrator,
+  updateAdministratorRole,
+  updateAdministratorPassword,
+  updateAdministratorStatus,
+  updateAdministratorPhoneNumber,
+  updateAdministratorName,
+  deleteAdministrator,
+  listAdministrator
+} from "api/administrator";
 export default {
   data() {
+    let text = '';
+    let role = this.$store.getters.roles.toString();
+    if(role === 'reporter'){
+        text = '记者';
+    }else if(role === 'editor'){
+        text = '编辑';
+    }else if(role === 'engineer'){
+        text = '工程师';
+    }else{
+        text = '未知';
+    }
     return {
+      administratorChange:{ID:this.$store.getters.uid},
       administrator: {
-        roles: this.$store.getters.roles.toString(),
+        roles: text,
         name: this.$store.getters.name,
         phone: this.$store.getters.phone,
         uid: this.$store.getters.uid
@@ -100,7 +121,43 @@ export default {
     },
     cancel() {
       this.$Message.info("Clicked cancel");
-    }
+    },
+    onChangeAdministratorPhoneNumber(){
+      let phoneNumber = this.administratorChange.PhoneNumber;
+      let id = this.administratorChange.ID;
+      updateAdministratorPhoneNumber(id,phoneNumber).then(response=>{
+          const responseData = response.data;
+          const data = responseData.data;
+          console.log(data);
+          this.administrator.phone = phoneNumber;
+      }).catch(error => {
+          console.log(error);
+      });
+    },
+    onChangeAdministratorPassword(){
+      let password = this.administratorChange.Password;
+      let id = this.administratorChange.ID;
+      updateAdministratorPassowrd(id,password).then(response=>{
+          const responseData = response.data;
+          const data = responseData.data;
+          console.log(data);
+          this.administrator.phone = phoneNumber;
+      }).catch(error => {
+          console.log(error);
+      });
+    },
+    onChangeAdministratorName(){
+      let name = this.administratorChange.Name;
+      let id = this.administratorChange.ID;
+      updateAdministratorName(id,name).then(response=>{
+          const responseData = response.data;
+          const data = responseData.data;
+          console.log(data);
+          this.administrator.name = name;
+      }).catch(error => {
+          console.log(error);
+      });
+    },
   }
 };
 </script>
