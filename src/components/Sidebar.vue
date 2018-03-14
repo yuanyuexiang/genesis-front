@@ -28,4 +28,7 @@ export default {
 .nav-link {
   cursor: pointer;
 }
+.sidebar {
+  background-color: #0d1f2b;
+}
 </style>

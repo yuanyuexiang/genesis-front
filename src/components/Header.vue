@@ -1,5 +1,5 @@
 <template>
-    <navbar>
+    <navbar class="navbar">
         <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button" @click="mobileSidebarToggle">&#9776;</button>
         <router-link to="/">
             <p class="logo-youentang">公众号管理系统</p>
@@ -122,4 +122,8 @@ export default {
 .header-item a {
   color: white !important;
 }
+.navbar {
+    background-color: #1d355b;
+}
+/*1d355b*/
 </style>
