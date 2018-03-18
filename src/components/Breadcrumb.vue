@@ -13,25 +13,25 @@
 export default {
     props: {
         list: {
-        type: Array,
-        required: true,
-        default: () => []
+            type: Array,
+            required: true,
+            default: () => []
         },
         separator: String
     },
     methods: {
         isLast(index) {
-        return index === this.list.length - 1;
+            return index === this.list.length - 1;
         },
         showName(item) {
-        console.log(this.list);
-        if (item.meta && item.meta.label) {
-            item = item.meta && item.meta.label;
-        }
-        if (item.name) {
-            item = item.name;
-        }
-        return item;
+            console.log(this.list);
+            if (item.meta && item.meta.label) {
+                item = item.meta && item.meta.label;
+            }
+            if (item.name) {
+                item = item.name;
+            }
+            return item;
         }
     }
 };

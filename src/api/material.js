@@ -8,10 +8,10 @@ export function saveMaterial(data) {
     });
 }
 
-export function listMaterial(limit, offset) {
+export function listMaterial(offset, count) {
     const params = {
-        limit,
-        offset
+        offset,
+        count
     };
     return fetch({
         url: '/genesis/v1/material',
