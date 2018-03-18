@@ -58,7 +58,7 @@ export function updateAdministratorRole(administratorID, role) {
 
 export function updateAdministratorPassword(administratorID, password) {
     const data = {
-        Role: password
+        Password: password
     }
     return fetch({
         url: '/genesis/v1/administrator/' + administratorID + '/password',

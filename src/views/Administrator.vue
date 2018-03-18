@@ -20,7 +20,7 @@
                     <a class="navbar-togglerk" @click="modalName = true">
                         <Icon type="edit" class="myIcon"></Icon>
                     </a>
-                    <Modal v-model="modalName" title="修改昵称" @on-ok="onChangeAdministratorPhoneName()" @on-cancel="cancel">
+                    <Modal v-model="modalName" title="修改昵称" @on-ok="onChangeAdministratorName()" @on-cancel="cancel">
                         <Form :model="administratorChange" :label-width="80">
                             <Form-item label="新昵称">
                                 <Input v-model="administratorChange.Name" placeholder="请输入昵称"></Input>
@@ -36,7 +36,7 @@
                     <Modal v-model="modalPassword" title="修改密码" @on-ok="onChangeAdministratorPassword()" @on-cancel="cancel">
                         <Form :model="administratorChange" :label-width="80">
                             <Form-item label="新密码">
-                                <Input v-model="administratorChange.PhoneNumber" placeholder="请输入新密码"></Input>
+                                <Input v-model="administratorChange.Password" placeholder="请输入新密码"></Input>
                             </Form-item>
                         </Form>
                     </Modal>
@@ -130,20 +130,37 @@ export default {
           const data = responseData.data;
           console.log(data);
           this.administrator.phone = phoneNumber;
+          const code = responseData.code;
+          const message = responseData.message;
+          if(code != 0){
+              this.$Message.info(message);
+          }else{
+              this.$Message.info("修改成功，即将重新登录！");
+              let vue = this;
+              setTimeout(function() {
+                vue.logout();
+              }, 2000);
+          }
       }).catch(error => {
           console.log(error);
+          this.$Message.error(error);
       });
     },
     onChangeAdministratorPassword(){
       let password = this.administratorChange.Password;
       let id = this.administratorChange.ID;
-      updateAdministratorPassowrd(id,password).then(response=>{
+      updateAdministratorPassword(id,password).then(response=>{
           const responseData = response.data;
           const data = responseData.data;
+          const code = responseData.code;
+          const message = responseData.message;
+          if(code != 0){
+              this.$Message.info(message);
+          }
           console.log(data);
-          this.administrator.phone = phoneNumber;
       }).catch(error => {
           console.log(error);
+          this.$Message.error(error);
       });
     },
     onChangeAdministratorName(){
@@ -154,10 +171,24 @@ export default {
           const data = responseData.data;
           console.log(data);
           this.administrator.name = name;
+          const code = responseData.code;
+          const message = responseData.message;
+          if(code != 0){
+              this.$Message.info(message);
+          }
       }).catch(error => {
           console.log(error);
+          this.$Message.error(error);
       });
     },
+    logout() {
+        this.$store.dispatch("LogOut").then(() => {
+                this.$router.push({ path: "/login" });
+            })
+            .catch(err => {
+                this.$message.error(err);
+            });
+        }
   }
 };
 </script>

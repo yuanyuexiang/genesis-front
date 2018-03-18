@@ -34,7 +34,7 @@
       </Form>
     </Modal>
     <!-- @on-ok="ok" @on-cancel="cancel"-->
-    <Modal v-model="modalAdministrator" title="添加管理员" @on-ok="onAdministrator('administratorForm')">
+    <Modal v-model="modalAdministrator" title="添加管理员" @on-ok="onAddAdministrator('administratorForm')">
       <Form ref="administratorForm" autoComplete="on" :model="administratorForm" :rules="ruleValidate" :label-width="100">
         <Form-item label="账号/手机号" prop="PhoneNumber">
           <Input v-model="administratorForm.PhoneNumber" autoComplete="on" placeholder="请输入手机号"></Input>

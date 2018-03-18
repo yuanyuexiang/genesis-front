@@ -1,5 +1,5 @@
 <template>
-    <div class="login-container" style="background-color: #141a48;margin: 0px;overflow: hidden;">
+    <div class="login-container" style="margin: 0px;overflow: hidden;">
         <div id="canvascontainer" ref='can'></div>
         <div class="log-logo">佑恩堂公众号管理系统</div>
         <Form ref="loginForm" autoComplete="on" :model="loginForm" :rules="loginRules" class="card-box login-form">
@@ -14,7 +14,7 @@
                 </Input>
             </Form-item>
             <Form-item>
-                <Button type="primary" @click="handleLogin('loginForm')" long>登录</Button>
+                <Button type="primary" class="login-button" @click="handleLogin('loginForm')" long>登录</Button>
             </Form-item>
             <!--
         <div class='tips'>admin账号为:admin@wz.com 密码123456</div>
@@ -112,9 +112,6 @@ export default {
 };
 </script>
 <style >
-.login-container a {
-  color: #0078de;
-}
 #canvascontainer {
   position: absolute;
   top: 0px;
@@ -134,7 +131,7 @@ export default {
 }
 .login-container {
   height: 100vh;
-  background-color: #2d3a4b;
+  background-color: #0d1f2a;
 
   input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #293444 inset !important;
@@ -200,6 +197,10 @@ export default {
   }
   .forget-pwd {
     color: #fff;
+  }
+  .login-button {
+    background-color: #a87f54;
+    border-color: #a87f54;
   }
 }
 </style>

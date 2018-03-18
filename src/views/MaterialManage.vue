@@ -1,15 +1,35 @@
 <template>
     <div class="animated fadeIn">
-        <Row>
-            <Col :md="24">
-                <h3 style="text-align:center">素材管理</h3>
+        
+        <Tabs>
+            <TabPane label="图文库" icon="images">
+                <Layout>
+        <Header>Header</Header>
+        <Layout>
+            <Content>Content</Content>
+            <Sider hide-trigger>Sider</Sider>
+        </Layout>
+        <Footer>Footer</Footer>
+    </Layout>
+            </TabPane>
+            <TabPane label="图片库" icon="image">图片库</TabPane>
+            <!--
+            <TabPane label="语言库" icon="mic-a">语言库</TabPane>
+            <TabPane label="视频库" icon="android-film">视频库</TabPane>
+            -->
+        </Tabs>
+        <!--
+        <Row style="background-color: white !important;">
+            <Col span="12">
+            <span>图文素材</span>
             </Col>
-        </Row>
-        <Row>
-            <Col span="24">
-                <h3 style="text-align:center">素材管理</h3>
+            <Col span="12" >
+            <span style="text-align: right;display: inline-block;width: 100%;">+图文素材</span>
             </Col>
+            
         </Row>
+        -->
+        <hr>
     </div>
 </template>
 
