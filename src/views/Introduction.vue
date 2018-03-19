@@ -1,15 +1,17 @@
 <template>
     <div class="animated fadeIn">
-        <Row>
-            <Col :md="24">
-                <h3 style="text-align:center">系统介绍</h3>
-            </Col>
-        </Row>
-        <Row>
-            <Col span="24">
-                <h3 style="text-align:center">系统介绍</h3>
-            </Col>
-        </Row>
+      <spn>
+        江宁基督教佑恩堂，原名江宁排头基督教堂，位于南京市江宁区西门子路99号。
+排头教堂成立于1998年，于2016年开始进行原址重建，并预计将于2018年5月完成重建工程。
+      </spn>
+      <br>
+      <img src="static/img/pic1.png" class="pic">
+      <br>
+      <spn>
+        本系统为佑恩堂官方微信号后台管理系统，由本教会弟兄无偿独立开发，包含功能有微信号系统维护、消息推送、文章发布等功能。
+如系统出现故障或有任何疑问，可联系：XXXXXXXXXXX。
+      </spn>
+      <img src="static/img/pic2.png" class="pic">
     </div>
 </template>
 
@@ -48,40 +50,13 @@ export default {
 </script>
 
 <style type="text/css" scoped>
-.time {
-  font-size: 14px;
-  font-weight: bold;
+.pic {
+  width: 100%;
 }
 .content {
   padding-left: 5px;
 }
 .dashboard_feature {
   text-align: center;
-}
-.demo-carousel {
-  height: 600px;
-  line-height: 200px;
-  text-align: center;
-  color: #fff;
-  font-size: 20px;
-  background: #506b9e;
-}
-.demo-carousel img {
-  height: 100%;
-  width: 100%;
-}
-h3,
-h4,
-h5 {
-  margin: 12px;
-}
-h3 {
-  margin-bottom: 20px;
-}
-p {
-  margin: 12px;
-}
-.row-margin-top {
-  margin-top: 30px;
 }
 </style>
