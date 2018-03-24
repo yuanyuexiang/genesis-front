@@ -9,16 +9,25 @@
             <div class="product-add-cart" @click.prevent="handleCart">加入购物车</div>
         </router-link>
         -->
-            <div v-for="(item, index) in materialNews.content.news_item" :key="item.id" class="item">
+        <div v-for="(item, index) in materialNews.content.news_item" :key="item.id" class="item">
+            <div v-if="materialNews.content.news_item.length>1">
                 <div v-if="index==0" class="">
-                    <img class="the-one-img" :src="item.url"> 
-                    <span class="the-one-txt">{{item.title}}</span>
+                    <img class="the-one-thumb_url" :src="item.url"> 
+                    <span class="the-one-title">{{item.title}}</span>
                 </div>
                 <div v-if="index>0" class="">
-                    <span class="the-other-txt">{{item.title}}</span>
-                    <img class="the-other-img" :src="item.url"> 
+                    <span class="the-other-title">{{item.title}}</span>
+                    <img class="the-other-thumb_url" :src="item.url"> 
                 </div>
             </div>
+            <div v-if="materialNews.content.news_item.length==1">
+                <div>
+                    <img class="the-only-one-thumb_url" :src="item.url"> 
+                    <span class="the-only-one-title">{{item.title}}</span>
+                    <span class="the-only-one-digest">{{item.digest}}</span>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -58,7 +67,11 @@
         methods: {
             handleCart () {
                 this.$store.commit('addCart', this.info.id);
+                let x = materialNews;
             }
+        },
+        mounted(){
+            //alert(JSON.stringify(this.materialNews.content.news_item.length));
         }
     };
 </script>
@@ -100,12 +113,15 @@
         display: inline-block;
     }
     .product{
-        width: 25%;
+        /*width: 25%;
         float: left;
+        */
+        break-inside: avoid;
+        box-sizing: border-box;
     }
     .product-main{
         display: block;
-        border: 1px solid #dddee1;
+        border: 2px solid #dddee1;
         /*margin: 6px;
         padding: 16px;
         
@@ -114,39 +130,69 @@
         background: #fff;
         position: relative;
     }
-    .the-one-img{
+    .the-one-thumb_url{
         width: 100%;
     }
-    .the-one-txt{
+    .the-one-title{
         position: absolute;
         left: 0;
         color: #fff;
         bottom: 0px;
-        width: 100%;
+        margin-left: 10px;
+        margin-right: 10px;
         text-overflow:ellipsis;
-        text-indent: 5px;
         height: 30px;
         line-height: 30px;
         text-align: left
     }
-    .the-other-txt{
+    .the-other-title{
         width: 70%;
-        height: 53px;
-        text-indent: 5px;
-        line-height: 30px;
+        height: 50px;
+        line-height: 150%;
+        padding: 10px;
+        text-align: left;
         float: left;
-        overflow: hidden;
-        text-align: center;
+
         -webkit-line-clamp:2;
         -webkit-box-orient: vertical;
         display:-webkit-box;
-        text-align: left
+        overflow:hidden;
     }
-    .the-other-img{
+    .the-other-thumb_url{
         width: 30%;
         float: right;
     }
     .item{
         position: relative;
+    }
+    .the-only-one-thumb_url{
+        width: 100%;
+    }
+    .the-only-one-title{
+        margin-top: 15px;
+        margin-bottom: 15px;
+        margin-left: 10px;
+        margin-right: 10px;
+        height: 50px;
+        line-height: 150%;
+        color: black;
+        font-size: 1.2em;
+        text-align: left;
+
+        -webkit-line-clamp:2;
+        -webkit-box-orient: vertical;
+        display:-webkit-box;
+        overflow:hidden;
+    }
+    .the-only-one-digest{
+        height: 50px;
+        line-height: 130%;
+        float: left;
+        text-align: left;
+        -webkit-line-clamp:2;
+        -webkit-box-orient: vertical;
+        display:-webkit-box;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 </style>
