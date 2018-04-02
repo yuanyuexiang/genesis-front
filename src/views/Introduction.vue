@@ -9,7 +9,7 @@
       <br>
       <spn>
         本系统为佑恩堂官方微信号后台管理系统，由本教会弟兄无偿独立开发，包含功能有微信号系统维护、消息推送、文章发布等功能。
-如系统出现故障或有任何疑问，可联系：XXXXXXXXXXX。
+如系统出现故障或有任何疑问，可联系：yuanyuexiang@126.com。
       </spn>
       <img src="static/img/pic2.png" class="pic">
     </div>

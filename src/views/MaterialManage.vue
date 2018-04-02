@@ -1,6 +1,14 @@
 <template>
     <div class="animated fadeIn">
-
+      <div id="container">
+          <span class="allMaterialNews">当前系统所有的素材</span>
+          <span class="addMaterialNews">
+            <a @click="onAddTheMaterial">+ 添加素材</a>
+            <!--
+            <router-link to="/material/addMaterial">+ 添加素材</router-link>
+            -->
+          </span>
+        </div>
         <Tabs>
             <TabPane label="图文库" icon="images">
                 <div class="material-news">
@@ -12,7 +20,9 @@
             <TabPane label="语言库" icon="mic-a">语言库</TabPane>
             <TabPane label="视频库" icon="android-film">视频库</TabPane>
             -->
+            
         </Tabs>
+        
         <!--
         <Row style="background-color: white !important;">
             <Col span="12">
@@ -56,233 +66,7 @@ export default {
       filterBrand: "",
       filterColor: "",
       order: "",
-
-      
-      productList:[
-          {
-              media_id:"abcd",
-              content:{
-                news_item:[
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png',
-                    digest:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。'
-                  }
-                ]
-              },
-              data:'yyy'
-          },
-          {
-              media_id:"abcd",
-              content:{
-                news_item:[
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  },
-                ]
-              },
-              data:'xxx'
-          },
-          {
-            media_id:"abcd",
-              content:{
-                news_item:[
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  }
-                ]
-              },
-              data:'yyy'
-          },
-          {
-              media_id:"abcd",
-              content:{
-                news_item:[
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png'
-                  }
-                ]
-              },
-              data:'yyy'
-          },
-          {
-              media_id:"abcd",
-              content:{
-                news_item:[
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  }
-                ]
-              },
-              data:'yyy'
-          },
-          {
-              media_id:"abcd",
-              content:{
-                news_item:[
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png'
-                  }
-                ]
-              },
-              data:'yyy'
-          },
-          {
-              media_id:"abcd",
-              content:{
-                news_item:[
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  }
-                ]
-              },
-              data:'yyy'
-          },
-          {
-              media_id:"abcd",
-              content:{
-                news_item:[
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png'
-                  }
-                ]
-              },
-              data:'yyy'
-          },
-          {
-              media_id:"abcd",
-              content:{
-                news_item:[
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  }
-                ]
-              },
-              data:'yyy'
-          },
-          {
-              media_id:"abcd",
-              content:{
-                news_item:[
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  },
-                ]
-              },
-              data:'xxx'
-          },{
-              media_id:"abcd",
-              content:{
-                news_item:[
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png'
-                  },
-                ]
-              },
-              data:'xxx'
-          },{
-              media_id:"abcd",
-              content:{
-                news_item:[
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  },
-                ]
-              },
-              data:'xxx'
-          },{
-              media_id:"abcd",
-              content:{
-                news_item:[
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic1.png'
-                  },
-                  {
-                    title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。',
-                    url:'static/img/pic2.png'
-                  },
-                ]
-              },
-              data:'xxx'
-          }
-      ]
-
+      productList:[]
     };
   },
   methods: {
@@ -297,16 +81,21 @@ export default {
             }
             
             const data = responseData.data;
-            console.log(data);
+            this.productList=data.item;
+            console.log(this.productList);
           }).catch(error=>{
             console.log(error);
           });
+      },
+      onAddTheMaterial(){
+        alert(this.$router);
+        console.log(this.$router);
       }
     
   },
   mounted() {
     //this.$store.dispatch("getProductList");
-    //this.listAllMaterial(1);
+    this.listAllMaterial(1);
   }
 };
 </script>
@@ -344,5 +133,21 @@ export default {
 .material-news{
     column-count: 4;
     column-gap: 0;
+}
+.addMaterialNews{
+  float: right;
+}
+.allMaterialNews {
+  display: inline-block;
+  width: 49.5%;
+  color: #2d8cf0;
+  margin-top: 10px;
+}
+.addMaterialNews {
+  display: inline-block;
+  width: 50%;
+  text-align: right;
+  color: #2d8cf0;
+  margin-top: 10px;
 }
 </style>

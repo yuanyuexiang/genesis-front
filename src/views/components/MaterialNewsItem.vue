@@ -12,17 +12,17 @@
         <div v-for="(item, index) in materialNews.content.news_item" :key="item.id" class="item">
             <div v-if="materialNews.content.news_item.length>1">
                 <div v-if="index==0" class="">
-                    <img class="the-one-thumb_url" :src="item.url"> 
+                    <img class="the-one-thumb_url" :src="item.thumb_url"> 
                     <span class="the-one-title">{{item.title}}</span>
                 </div>
                 <div v-if="index>0" class="">
                     <span class="the-other-title">{{item.title}}</span>
-                    <img class="the-other-thumb_url" :src="item.url"> 
+                    <img class="the-other-thumb_url" :src="item.thumb_url"> 
                 </div>
             </div>
             <div v-if="materialNews.content.news_item.length==1">
                 <div>
-                    <img class="the-only-one-thumb_url" :src="item.url"> 
+                    <img class="the-only-one-thumb_url" :src="item.thumb_url"> 
                     <span class="the-only-one-title">{{item.title}}</span>
                     <span class="the-only-one-digest">{{item.digest}}</span>
                 </div>

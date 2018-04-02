@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 const _import = require('./_import_' + process.env.NODE_ENV);
-import Full from '@/containers/Full'
-import Full2 from '@/containers/Full2'
+import Full from '@/containers/Full';
+import Full2 from '@/containers/Full2';
 
-import Buttons from '@/views/components/Buttons'
+import Buttons from '@/views/components/Buttons';
 
 // Views - Pages
-import Page404 from '@/views/errorPages/Page404'
-import Page500 from '@/views/errorPages/Page500'
+import Page404 from '@/views/errorPages/Page404';
+import Page500 from '@/views/errorPages/Page500';
 
 
 /* login */
@@ -45,13 +45,14 @@ export const asyncRouterMap = [
         component: Full,
         hidden: false,
         children: [
-            { path: '/introduction', name: '系统介绍', icon: 'thumbsup', component: _import('Introduction') },
-            { path: '/interaction', name: '微互动', icon: 'link', component: _import('Interaction') },
-            { path: '/menu', name: '自定义菜单', icon: 'android-menu', component: _import('CoustomMenu') },
-            { path: '/announcement', name: '群发功能', icon: 'speakerphone', component: _import('Announcement') },
-            { path: '/user', name: '用户管理', icon: 'ios-people', component: _import('UserManage') },
-            { path: '/message', name: '消息管理', icon: 'chatbox-working', component: _import('MessageManage') },
-            { path: '/material', name: '素材管理', icon: 'mic-c', component: _import('MaterialManage') }
+            { path: '/introduction', name: '系统介绍', icon: 'thumbsup', component: _import('Introduction')},
+            { path: '/interaction', name: '微互动', icon: 'link', component: _import('Interaction')},
+            { path: '/menu', name: '自定义菜单', icon: 'android-menu', component: _import('CoustomMenu')},
+            { path: '/announcement', name: '群发功能', icon: 'speakerphone', component: _import('Announcement')},
+            { path: '/user', name: '用户管理', icon: 'ios-people', component: _import('UserManage')},
+            { path: '/message', name: '消息管理', icon: 'chatbox-working', component: _import('MessageManage')},
+            { path: '/material', name: '素材管理', icon: 'mic-c', component: _import('MaterialManage')},
+            { path: '/material/addMaterial', name: '添加素材', icon: 'mic-c', component: _import('AddMaterial'),hidden: true}
             /*
             { path: '/dashboard', name: 'Dashboard', icon: 'speedometer', component: _import('Dashboard') },
             { path: '/infomation', name: '我的信息', icon: '', component: _import('Administrator') }
@@ -111,8 +112,8 @@ export const asyncRouterMap = [
         component: Full,
         hidden: false,
         children: [
-            { path: '/administrator/infomation', name: '我的信息', icon: '', component: _import('Administrator') },
-            { path: '/administrator/administratorManage', name: '管理员管理', icon: '', component: _import('AdministratorManage') }
+            { path: '/administrator/infomation', name: '我的信息', icon: 'thumbsup', component: _import('Administrator') },
+            { path: '/administrator/administratorManage', name: '管理员管理', icon: 'speedometer', component: _import('AdministratorManage') }
         ]
     },
 
