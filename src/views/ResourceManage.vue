@@ -1,18 +1,18 @@
 <template>
     <div class="animated fadeIn">
       <div id="container">
-          <span class="allMaterialNews">当前系统所有的素材</span>
-          <span class="addMaterialNews">
-            <a @click="onAddTheMaterial">+ 添加素材</a>
+          <span class="allResource">当前系统所有的素材资源</span>
+          <span class="addResource">
+            <a @click="onAddTheMaterial">+ 添加资源</a>
             <!--
-            <router-link to="/material/addMaterial">+ 添加素材</router-link>
+            <router-link to="/resource/addMaterial">+ 添加素材</router-link>
             -->
           </span>
         </div>
         <Tabs>
             <TabPane label="图文库" icon="images">
-                <div class="material-news">
-                    <MaterialNewsItem v-for="item in materialNewsList" :materialNews="item" :key="item.id"></MaterialNewsItem>
+                <div class="resource-article">
+                    <ArticleItem v-for="item in articleList" :article="item" :key="item.id"></ArticleItem>
                 </div>
             </TabPane>
             <TabPane label="图片库" icon="image">图片库</TabPane>
@@ -38,18 +38,30 @@
 </template>
 
 <script>
-import MaterialNewsItem from "./components/MaterialNewsItem.vue";
+import ArticleItem from "./components/ArticleItem.vue";
 import {
-    listMaterialNews
-} from "api/material";
+    saveArticle,
+    listArticle,
+    getArticle,
+    updateArticle,
+    deleteArticle,
+    updateArticleReviewStatus,
+
+    saveMedia,
+    listMedia,
+    getMedia,
+    updateMedia,
+    deleteMedia,
+    updateMediaReviewStatus
+} from "api/resource";
 export default {
-  components: { MaterialNewsItem },
+  components: { ArticleItem },
   computed: {
 
     list() {
-      return this.productList;
+      return this.articleList;
     },
-    materialNewsList() {
+    articleList() {
       let list = [...this.list];
      
       return list;
@@ -61,12 +73,12 @@ export default {
       filterBrand: "",
       filterColor: "",
       order: "",
-      productList:[]
+      articleList:[]
     };
   },
   methods: {
-      listAllMaterialNews(page){
-          listMaterialNews(page,12)
+      listAllArticle(page){
+          listArticle(page-1,12)
           .then(response =>{
             const responseData = response.data;
             const code = responseData.code;
@@ -76,13 +88,13 @@ export default {
             }
             
             const data = responseData.data;
-            this.productList=data.item;
-            console.log(this.productList);
+            this.articleList=data;
+            console.log(this.articleList);
           }).catch(error=>{
             console.log(error);
           });
       },
-      onAddTheMaterial(){
+      onAddTheArticle(){
         alert(this.$router);
         console.log(this.$router);
       }
@@ -90,7 +102,7 @@ export default {
   },
   mounted() {
     //this.$store.dispatch("getProductList");
-    this.listAllMaterialNews(1);
+    this.listAllArticle(1);
   }
 };
 </script>
@@ -125,20 +137,20 @@ export default {
   text-align: center;
   padding: 32px;
 }
-.material-news{
+.resource-article{
     column-count: 4;
     column-gap: 0;
 }
-.addMaterialNews{
+.addResource{
   float: right;
 }
-.allMaterialNews {
+.allResource {
   display: inline-block;
   width: 49.5%;
   color: #2d8cf0;
   margin-top: 10px;
 }
-.addMaterialNews {
+.addResource {
   display: inline-block;
   width: 50%;
   text-align: right;

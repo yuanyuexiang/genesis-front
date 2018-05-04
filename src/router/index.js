@@ -47,11 +47,13 @@ export const asyncRouterMap = [
         children: [
             { path: '/introduction', name: '系统介绍', icon: 'thumbsup', component: _import('Introduction')},
             { path: '/interaction', name: '微互动', icon: 'link', component: _import('Interaction')},
+            /*
             { path: '/menu', name: '自定义菜单', icon: 'android-menu', component: _import('CoustomMenu')},
+            */
             { path: '/announcement', name: '群发功能', icon: 'speakerphone', component: _import('Announcement')},
             { path: '/user', name: '用户管理', icon: 'ios-people', component: _import('UserManage')},
             { path: '/message', name: '消息管理', icon: 'chatbox-working', component: _import('MessageManage')},
-            { path: '/material', name: '素材管理', icon: 'mic-c', component: _import('MaterialManage')},
+            { path: '/material', name: '资源管理', icon: 'mic-c', component: _import('ResourceManage')},
             { path: '/material/addMaterial', name: '添加素材', icon: 'mic-c', component: _import('AddMaterial'),hidden: true}
             /*
             { path: '/dashboard', name: 'Dashboard', icon: 'speedometer', component: _import('Dashboard') },

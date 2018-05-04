@@ -1,50 +1,69 @@
 import fetch from 'utils/fetch';
 
-export function saveMaterial(data) {
+export function saveMaterialNews(data) {
     return fetch({
-        url: '/genesis/v1/material',
+        url: '/genesis/v1/news',
         method: 'post',
         data
     });
 }
 
-export function listMaterial(offset, count) {
+export function listMaterialNews(limit, offset) {
     const params = {
-        offset,
-        count
+        limit,
+        offset
     };
     return fetch({
-        url: '/genesis/v1/material',
+        url: '/genesis/v1/news',
         method: 'get',
         params
     });
 }
 
-export function getMaterial(MediaID) {
+export function getMaterialNews(id) {
     return fetch({
-        url: '/genesis/v1/material/' + MediaID,
+        url: '/genesis/v1/news/' + id,
         method: 'get'
     });
 }
 
-export function updateMaterial(MediaID, data) {
+export function deleteMaterialNews(id) {
     return fetch({
-        url: '/genesis/v1/material/' + MediaID,
-        method: 'put',
-        data
-    });
-}
-
-export function deleteMaterial(MaterialID) {
-    return fetch({
-        url: '/genesis/v1/material/' + MaterialID,
+        url: '/genesis/v1/news/' + id,
         method: 'delete'
     });
 }
 
-export function getMaterialCount() {
+export function saveMaterialMedia(data) {
     return fetch({
-        url: '/genesis/v1/material/count',
+        url: '/genesis/v1/media',
+        method: 'post',
+        data
+    });
+}
+
+export function listMaterialMedia(limit, offset) {
+    const params = {
+        limit,
+        offset
+    };
+    return fetch({
+        url: '/genesis/v1/media',
+        method: 'get',
+        params
+    });
+}
+
+export function getMaterialMedia(id) {
+    return fetch({
+        url: '/genesis/v1/media/' + id,
         method: 'get'
+    });
+}
+
+export function deleteMaterialMedia(id) {
+    return fetch({
+        url: '/genesis/v1/media/' + id,
+        method: 'delete'
     });
 }
