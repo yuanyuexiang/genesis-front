@@ -3,7 +3,7 @@
       <div id="container">
           <span class="allResource">当前系统所有的素材资源</span>
           <span class="addResource">
-            <a @click="onAddTheMaterial">+ 添加资源</a>
+            <a @click="onAddTheArticle">+ 添加资源</a>
             <!--
             <router-link to="/resource/addMaterial">+ 添加素材</router-link>
             -->
@@ -15,7 +15,11 @@
                     <ArticleItem v-for="item in articleList" :article="item" :key="item.id"></ArticleItem>
                 </div>
             </TabPane>
-            <TabPane label="图片库" icon="image">图片库</TabPane>
+            <TabPane label="图片库" icon="image">
+              <div class="resource-article">
+                    <MediaItem v-for="item in mediaList" :media="item" :key="item.id"></MediaItem>
+                </div>
+            </TabPane>
             <!--
             <TabPane label="语言库" icon="mic-a">语言库</TabPane>
             <TabPane label="视频库" icon="android-film">视频库</TabPane>
@@ -39,6 +43,7 @@
 
 <script>
 import ArticleItem from "./components/ArticleItem.vue";
+import MediaItem from "./components/MediaItem.vue";
 import {
     saveArticle,
     listArticle,
@@ -55,7 +60,8 @@ import {
     updateMediaReviewStatus
 } from "api/resource";
 export default {
-  components: { ArticleItem },
+  components: { ArticleItem, MediaItem},
+  /*
   computed: {
 
     list() {
@@ -66,14 +72,15 @@ export default {
      
       return list;
     }
-  },
+  },*/
   data() {
 
     return {
       filterBrand: "",
       filterColor: "",
       order: "",
-      articleList:[]
+      articleList:[],
+      mediaList:[]
     };
   },
   methods: {
@@ -94,6 +101,23 @@ export default {
             console.log(error);
           });
       },
+      listAllMedia(page){
+          listMedia(page-1,12,"type:image")
+          .then(response =>{
+            const responseData = response.data;
+            const code = responseData.code;
+            if(code != 0){
+                const message = responseData.message;
+                this.$Message.info(message);
+            }
+            
+            const data = responseData.data;
+            this.mediaList=data;
+            console.log(this.mediaList);
+          }).catch(error=>{
+            console.log(error);
+          });
+      },
       onAddTheArticle(){
         alert(this.$router);
         console.log(this.$router);
@@ -103,6 +127,7 @@ export default {
   mounted() {
     //this.$store.dispatch("getProductList");
     this.listAllArticle(1);
+    this.listAllMedia(1);
   }
 };
 </script>

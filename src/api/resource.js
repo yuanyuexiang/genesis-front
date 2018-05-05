@@ -9,10 +9,10 @@ export function saveArticle(data) {
     });
 }
 
-export function listArticle(offset, count) {
+export function listArticle(offset, limit) {
     const params = {
         offset,
-        count
+        limit
     };
     return fetch({
         url: '/genesis/v1/article',
@@ -59,10 +59,11 @@ export function saveMedia(data) {
     });
 }
 
-export function listMedia(offset, count) {
+export function listMedia(offset, limit ,query) {
     const params = {
         offset,
-        count
+        limit,
+        query
     };
     return fetch({
         url: '/genesis/v1/media',
