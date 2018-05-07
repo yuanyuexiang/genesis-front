@@ -1,12 +1,10 @@
 <template>
     <div class="animated fadeIn">
-      <div id="container">
+        <div id="container">
           <span class="allResource">当前系统所有的素材资源</span>
           <span class="addResource">
-            <a @click="onAddTheArticle">+ 添加资源</a>
-            <!--
-            <router-link to="/resource/addMaterial">+ 添加素材</router-link>
-            -->
+            <!--<a @click="onAddTheArticle">+ 添加资源</a>-->
+            <router-link to="/resource/addArticle">+ 添加资源</router-link>
           </span>
         </div>
         <Tabs>
@@ -14,6 +12,7 @@
                 <div class="resource-article">
                     <ArticleItem v-for="item in articleList" :article="item" :key="item.id"></ArticleItem>
                 </div>
+              
             </TabPane>
             <TabPane label="图片库" icon="image">
               <div class="resource-article">
@@ -38,6 +37,7 @@
             
         </Row>
         -->
+        
     </div>
 </template>
 

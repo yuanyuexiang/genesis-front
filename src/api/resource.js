@@ -60,10 +60,14 @@ export function saveMedia(data) {
 }
 
 export function listMedia(offset, limit ,query) {
+    const sortby="id"
+    const order="desc"
     const params = {
         offset,
         limit,
-        query
+        query,
+        sortby,
+        order
     };
     return fetch({
         url: '/genesis/v1/media',

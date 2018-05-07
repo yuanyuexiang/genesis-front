@@ -46,15 +46,17 @@ export const asyncRouterMap = [
         hidden: false,
         children: [
             { path: '/introduction', name: '系统介绍', icon: 'thumbsup', component: _import('Introduction')},
-            { path: '/interaction', name: '微互动', icon: 'link', component: _import('Interaction')},
+
             /*
             { path: '/menu', name: '自定义菜单', icon: 'android-menu', component: _import('CoustomMenu')},
             */
+            { path: '/resource', name: '资源管理', icon: 'mic-c', component: _import('ResourceManage')},
+            { path: '/resource/addArticle', name: '添加图文', icon: 'mic-c', component: _import('ResourceArticleAdd'),hidden: true},
             { path: '/announcement', name: '群发功能', icon: 'speakerphone', component: _import('Announcement')},
+            { path: '/interaction', name: '微信互动', icon: 'link', component: _import('Interaction')},
             { path: '/user', name: '用户管理', icon: 'ios-people', component: _import('UserManage')},
             { path: '/message', name: '消息管理', icon: 'chatbox-working', component: _import('MessageManage')},
-            { path: '/material', name: '资源管理', icon: 'mic-c', component: _import('ResourceManage')},
-            { path: '/material/addMaterial', name: '添加素材', icon: 'mic-c', component: _import('AddMaterial'),hidden: true}
+            
             /*
             { path: '/dashboard', name: 'Dashboard', icon: 'speedometer', component: _import('Dashboard') },
             { path: '/infomation', name: '我的信息', icon: '', component: _import('Administrator') }
