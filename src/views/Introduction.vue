@@ -1,16 +1,16 @@
 <template>
     <div class="animated fadeIn">
-      <spn>
+      <span>
         江宁基督教佑恩堂，原名江宁排头基督教堂，位于南京市江宁区西门子路99号。
 排头教堂成立于1998年，于2016年开始进行原址重建，并预计将于2018年5月完成重建工程。
-      </spn>
+      </span>
       <br>
       <img src="static/img/pic1.png" class="pic">
       <br>
-      <spn>
+      <span>
         本系统为佑恩堂官方微信号后台管理系统，由本教会弟兄无偿独立开发，包含功能有微信号系统维护、消息推送、文章发布等功能。
 如系统出现故障或有任何疑问，可联系：yuanyuexiang@126.com。
-      </spn>
+      </span>
       <img src="static/img/pic2.png" class="pic">
     </div>
 </template>

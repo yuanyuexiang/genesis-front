@@ -7,17 +7,12 @@
             <router-link to="/resource/addArticle">+ 添加资源</router-link>
           </span>
         </div>
-        <Tabs>
-            <TabPane label="图文库" icon="images">
-                <div class="resource-article">
-                    <ArticleItem v-for="item in articleList" :article="item" :key="item.id"></ArticleItem>
-                </div>
-              
+        <Tabs @on-click="OnTabClick" id="tabs">
+            <TabPane label="图文库" icon="images" name="article">
+              <ArticleManage ref="ArticleManage"></ArticleManage>
             </TabPane>
-            <TabPane label="图片库" icon="image">
-              <div class="resource-article">
-                    <MediaItem v-for="item in mediaList" :media="item" :key="item.id"></MediaItem>
-                </div>
+            <TabPane label="图片库" icon="image" name="media">
+              <MediaManage ref="MediaManage"/>
             </TabPane>
             <!--
             <TabPane label="语言库" icon="mic-a">语言库</TabPane>
@@ -42,92 +37,48 @@
 </template>
 
 <script>
-import ArticleItem from "./components/ArticleItem.vue";
-import MediaItem from "./components/MediaItem.vue";
-import {
-    saveArticle,
-    listArticle,
-    getArticle,
-    updateArticle,
-    deleteArticle,
-    updateArticleReviewStatus,
+import ArticleManage from "./components/ArticleManage.vue";
+import MediaManage from "./components/MediaManage.vue";
 
-    saveMedia,
-    listMedia,
-    getMedia,
-    updateMedia,
-    deleteMedia,
-    updateMediaReviewStatus
-} from "api/resource";
 export default {
-  components: { ArticleItem, MediaItem},
-  /*
-  computed: {
+  components: {ArticleManage, MediaManage},
 
-    list() {
-      return this.articleList;
-    },
-    articleList() {
-      let list = [...this.list];
-     
-      return list;
-    }
-  },*/
   data() {
-
     return {
-      filterBrand: "",
-      filterColor: "",
-      order: "",
-      articleList:[],
-      mediaList:[]
+      tabName: "article"
     };
   },
   methods: {
-      listAllArticle(page){
-          listArticle(page-1,12)
-          .then(response =>{
-            const responseData = response.data;
-            const code = responseData.code;
-            if(code != 0){
-                const message = responseData.message;
-                this.$Message.info(message);
-            }
-            
-            const data = responseData.data;
-            this.articleList=data;
-            console.log(this.articleList);
-          }).catch(error=>{
-            console.log(error);
-          });
-      },
-      listAllMedia(page){
-          listMedia(page-1,12,"type:image")
-          .then(response =>{
-            const responseData = response.data;
-            const code = responseData.code;
-            if(code != 0){
-                const message = responseData.message;
-                this.$Message.info(message);
-            }
-            
-            const data = responseData.data;
-            this.mediaList=data;
-            console.log(this.mediaList);
-          }).catch(error=>{
-            console.log(error);
-          });
-      },
-      onAddTheArticle(){
-        alert(this.$router);
-        console.log(this.$router);
+    OnTabClick(name){
+      console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+      console.log(name);
+      this.tabName=name;
+    },
+    scrollHandler() {
+      let scrollTop = document.documentElement.scrollTop;
+      console.log(document.documentElement.scrollTop);
+      if (scrollTop + window.innerHeight >= document.body.clientHeight) {
+        //console.log("----------------------------a-----------------------------------");
+        if(this.tabName=="article"){
+          this.$refs.ArticleManage.onScrollButtom();
+        }else if(this.tabName=="media"){
+          this.$refs.MediaManage.onScrollButtom();
+        }else{
+          console.log("----------------------------a-----------------------------------");
+        }
       }
-    
+    }
   },
   mounted() {
-    //this.$store.dispatch("getProductList");
-    this.listAllArticle(1);
-    this.listAllMedia(1);
+    /*
+    let _ = this;
+    this.throttleLoad=throttle(()=>{
+      _.scrollHandler()
+      },200);*/
+    window.addEventListener("scroll", this.scrollHandler);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.scrollHandler);
   }
 };
 </script>
@@ -143,30 +94,15 @@ export default {
 .list-control-filter {
   margin-bottom: 16px;
 }
-.list-control-filter-item,
-.list-control-order-item {
-  cursor: pointer;
-  display: inline-block;
-  border: 1px solid #e9eaec;
-  border-radius: 4px;
-  margin-right: 6px;
-  padding: 2px 6px;
-}
-.list-control-filter-item.on,
-.list-control-order-item.on {
-  background: #f2352e;
-  border: 1px solid #f2352e;
-  color: #fff;
-}
 .product-not-found {
   text-align: center;
   padding: 32px;
 }
-.resource-article{
-    column-count: 4;
-    column-gap: 0;
+.resource-article {
+  column-count: 4;
+  column-gap: 0;
 }
-.addResource{
+.addResource {
   float: right;
 }
 .allResource {

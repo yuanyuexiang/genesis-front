@@ -10,9 +10,13 @@ export function saveArticle(data) {
 }
 
 export function listArticle(offset, limit) {
+    const sortby="id"
+    const order="desc"
     const params = {
         offset,
-        limit
+        limit,
+        sortby,
+        order
     };
     return fetch({
         url: '/genesis/v1/article',
