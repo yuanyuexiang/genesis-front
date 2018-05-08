@@ -30,6 +30,7 @@ export default {
   },
   methods: {
     listAllArticle(offset) {
+      this.$Loading.start();
       listArticle(offset, 50)
         .then(response => {
           const responseData = response.data;
@@ -45,9 +46,11 @@ export default {
           if(this.articleList != null){
             this.offset = this.articleList.length;
           }
+          this.$Loading.finish();
         })
         .catch(error => {
           console.log(error);
+          this.$Loading.error();
         });
     },
     onAddTheArticle() {

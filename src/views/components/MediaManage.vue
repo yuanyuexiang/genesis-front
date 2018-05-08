@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     listAllMedia(offset) {
+      this.$Loading.start();
       listMedia(offset, 10, "type:image")
         .then(response => {
           const responseData = response.data;
@@ -46,9 +47,11 @@ export default {
           if(this.mediaList != null){
             this.offset = this.mediaList.length;
           }
+          this.$Loading.finish();
         })
         .catch(error => {
           console.log(error);
+          this.$Loading.error();
         });
     },
     onScrollButtom() {
