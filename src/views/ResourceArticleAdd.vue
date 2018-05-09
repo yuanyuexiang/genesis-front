@@ -32,12 +32,16 @@
                     <Button type="ghost" icon="chevron-down" @click="modal1 = true">选择</Button>
                     <Modal
                         v-model="modal1"
-                        title="Common Modal dialog box title"
-                        @on-ok="ok"
-                        @on-cancel="cancel">
-                        <p>Content of dialog</p>
-                        <p>Content of dialog</p>
-                        <p>Content of dialog</p>
+                        title="选择封面">
+
+                        <Scroll :on-reach-bottom="handleReachBottom">
+                          <Card :title="item.title" v-for="item in mediaList" :media="item" :key="item.id" style="margin: 0;cursor: pointer;">
+                            <div style="text-align:center">
+                                <img :src="item.url" @click="onSelectItem(item)">
+                            </div>
+                          </Card>
+                        </Scroll>
+                        <div slot="footer"></div>
                     </Modal>
                   </Col>
                   <Col span="4" class="img-col">
@@ -68,19 +72,18 @@
 <script>
 import { VueTinymce, TinymceSetting } from "vue-tinymce";
 import {
-    saveArticle,
-    listArticle,
-    getArticle,
-    updateArticle,
-    deleteArticle,
-    updateArticleReviewStatus,
-
-    saveMedia,
-    listMedia,
-    getMedia,
-    updateMedia,
-    deleteMedia,
-    updateMediaReviewStatus
+  saveArticle,
+  listArticle,
+  getArticle,
+  updateArticle,
+  deleteArticle,
+  updateArticleReviewStatus,
+  saveMedia,
+  listMedia,
+  getMedia,
+  updateMedia,
+  deleteMedia,
+  updateMediaReviewStatus
 } from "api/resource";
 
 export default {
@@ -95,15 +98,12 @@ export default {
         thumb_id: -1,
         thumb_url: ""
       },
-      picc: "adsdasda",
       fileParam: {
         title: "封面",
         introduction: "封面介绍"
       },
       fileUrl: "",
       fileStatus: "",
-      show_content1_html: false,
-      show_content2_html: false,
       content1: "<p>可直接粘贴图片地址插入图片</p>",
       setting1: Object.assign({}, TinymceSetting, {
         height: 400,
@@ -111,7 +111,9 @@ export default {
         block_formats:
           "Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;Heading 4=h4;Heading 5=h5;Heading 6=h6;"
       }),
-      modal1: false
+      modal1: false,
+      mediaList: [],
+      offset: 0
     };
   },
   methods: {
@@ -136,30 +138,66 @@ export default {
     checkChange(status) {
       this.articleForm.show_cover_pic = status ? 1 : 0;
     },
-    ok() {
-      this.$Message.info("Clicked ok");
+    submitArticle() {
+      saveArticle(this.articleForm)
+        .then(response => {
+          const responseData = response.data;
+          const code = responseData.code;
+          if (code != 0) {
+            const message = responseData.message;
+            this.$Message.info(message);
+          }
+
+          const data = responseData.data;
+          console.log("--------------saveArticle-----------------");
+          console.log(data);
+          this.$router.push({ path: "/resource", query:{tabName:"article"}});
+        })
+        .catch(error => {
+          console.log("--------------saveArticle-----------------");
+          console.log(error);
+        });
     },
-    cancel() {
-      this.$Message.info("Clicked cancel");
+    listAllMedia(offset) {
+      this.$Loading.start();
+      listMedia(offset, 10, "type:image")
+        .then(response => {
+          const responseData = response.data;
+          const code = responseData.code;
+          if (code != 0) {
+            const message = responseData.message;
+            this.$Message.info(message);
+          }
+
+          const data = responseData.data;
+          this.mediaList = this.mediaList.concat(data);
+          console.log(this.mediaList);
+          if (this.mediaList != null) {
+            this.offset = this.mediaList.length;
+          }
+          this.$Loading.finish();
+        })
+        .catch(error => {
+          console.log(error);
+          this.$Loading.error();
+        });
     },
-    submitArticle(){
-      saveArticle(this.articleForm).then(response =>{
-            const responseData = response.data;
-            const code = responseData.code;
-            if(code != 0){
-                const message = responseData.message;
-                this.$Message.info(message);
-            }
-            
-            const data = responseData.data;
-            console.log("--------------saveArticle-----------------");
-            console.log(data);
-            this.$router.push({ path: "/resource" });
-          }).catch(error=>{
-            console.log("--------------saveArticle-----------------");
-            console.log(error);
-          });
+    handleReachBottom() {
+      this.listAllMedia(this.offset);
+    },
+    onSelectItem(item) {
+      this.modal1 = false;
+
+      this.articleForm.thumb_id = item.id;
+      this.articleForm.thumb_url = item.url;
+      let vue = this;
+      setTimeout(function() {
+        vue.fileUrl = item.url;
+      }, 500);
     }
+  },
+  mounted() {
+    this.listAllMedia(this.offset);
   }
 };
 </script>

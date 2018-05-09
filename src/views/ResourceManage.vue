@@ -4,10 +4,11 @@
           <span class="allResource">当前系统所有的素材资源</span>
           <span class="addResource">
             <!--<a @click="onAddTheArticle">+ 添加资源</a>-->
-            <router-link to="/resource/addArticle">+ 添加资源</router-link>
+            <router-link to="/resource/addArticle" v-if='tabName=="article"'>+ 添加图文资源</router-link>
+            <router-link to="/resource/addMedia" v-if='tabName=="media"'>+ 添加媒体资源</router-link>
           </span>
         </div>
-        <Tabs @on-click="OnTabClick" id="tabs">
+        <Tabs @on-click="OnTabClick" id="tabs" :value="tabName">
             <TabPane label="图文库" icon="images" name="article">
               <ArticleManage ref="ArticleManage"></ArticleManage>
             </TabPane>
@@ -76,6 +77,8 @@ export default {
       _.scrollHandler()
       },200);*/
     window.addEventListener("scroll", this.scrollHandler);
+    //this.tabName = "media";
+    this.tabName = this.$route.query.tabName
   },
   destroyed() {
     window.removeEventListener("scroll", this.scrollHandler);
