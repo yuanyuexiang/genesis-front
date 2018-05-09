@@ -78,7 +78,9 @@ export default {
       },200);*/
     window.addEventListener("scroll", this.scrollHandler);
     //this.tabName = "media";
-    this.tabName = this.$route.query.tabName
+    if(this.$route.query.tabName != null){
+      this.tabName = this.$route.query.tabName
+    }
   },
   destroyed() {
     window.removeEventListener("scroll", this.scrollHandler);
