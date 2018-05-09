@@ -8,7 +8,7 @@
             <router-link to="/resource/addMedia" v-if='tabName=="media"'>+ 添加媒体资源</router-link>
           </span>
         </div>
-        <Tabs @on-click="OnTabClick" id="tabs" :value="tabName">
+        <Tabs @on-click="onTabClick" id="tabs" :value="tabName">
             <TabPane label="图文库" icon="images" name="article">
               <ArticleManage ref="ArticleManage"></ArticleManage>
             </TabPane>
@@ -50,34 +50,25 @@ export default {
     };
   },
   methods: {
-    OnTabClick(name){
-      console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
-      console.log(name);
+    onTabClick(name){
       this.tabName=name;
     },
     scrollHandler() {
       let scrollTop = document.documentElement.scrollTop;
       console.log(document.documentElement.scrollTop);
       if (scrollTop + window.innerHeight >= document.body.clientHeight) {
-        //console.log("----------------------------a-----------------------------------");
         if(this.tabName=="article"){
           this.$refs.ArticleManage.onScrollButtom();
         }else if(this.tabName=="media"){
           this.$refs.MediaManage.onScrollButtom();
         }else{
-          console.log("----------------------------a-----------------------------------");
+          console.log("NO TABNAME");
         }
       }
     }
   },
   mounted() {
-    /*
-    let _ = this;
-    this.throttleLoad=throttle(()=>{
-      _.scrollHandler()
-      },200);*/
     window.addEventListener("scroll", this.scrollHandler);
-    //this.tabName = "media";
     if(this.$route.query.tabName != null){
       this.tabName = this.$route.query.tabName
     }
@@ -89,20 +80,6 @@ export default {
 </script>
 
 <style type="text/css" scoped>
-.list-control {
-  background: #fff;
-  border-radius: 6px;
-  margin: 16px;
-  padding: 16px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-}
-.list-control-filter {
-  margin-bottom: 16px;
-}
-.product-not-found {
-  text-align: center;
-  padding: 32px;
-}
 .resource-article {
   column-count: 4;
   column-gap: 0;
