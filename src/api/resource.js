@@ -10,7 +10,7 @@ export function saveArticle(data) {
 }
 
 export function listArticle(offset, limit) {
-    const sortby="id"
+    const sortby="update_time"
     const order="desc"
     const params = {
         offset,

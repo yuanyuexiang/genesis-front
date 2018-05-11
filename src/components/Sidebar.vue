@@ -30,5 +30,6 @@ export default {
 }
 .sidebar {
   background-color: #0d1f2b;
+  font-size: 20px;
 }
 </style>

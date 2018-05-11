@@ -6,7 +6,6 @@
 
 <script>
 import ArticleItem from "./ArticleItem.vue";
-import MediaItem from "./MediaItem.vue";
 
 import {
   saveArticle,

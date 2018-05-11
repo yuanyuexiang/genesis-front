@@ -36,3 +36,10 @@ export default {
     }
 };
 </script>
+<style lang="css">
+.breadcrumb {
+  font-size: 20px;
+  font-weight: 900;
+  font-family: "Microsoft YaHei","Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB",Arial,sans-serif;
+}
+</style>
