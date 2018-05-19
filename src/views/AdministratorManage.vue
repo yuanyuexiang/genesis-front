@@ -22,7 +22,7 @@
       </div>
       </Col>
     </Row>
-    <Modal v-model="modalPhone" title="修改角色权限" @on-ok="onChangeAdministratorRole()" @on-cancel="cancel">
+    <Modal v-model="modalPhone" :scrollable="true" title="修改角色权限" @on-ok="onChangeAdministratorRole()" @on-cancel="cancel">
       <Form :label-width="80">
         <Form-item label="角色" prop="Role">
           <Select v-model="administratorChange.Role">
@@ -34,7 +34,7 @@
       </Form>
     </Modal>
     <!-- @on-ok="ok" @on-cancel="cancel"-->
-    <Modal v-model="modalAdministrator" title="添加管理员" @on-ok="onAddAdministrator('administratorForm')">
+    <Modal :scrollable="true" v-model="modalAdministrator" title="添加管理员" @on-ok="onAddAdministrator('administratorForm')">
       <Form ref="administratorForm" autoComplete="on" :model="administratorForm" :rules="ruleValidate" :label-width="100">
         <Form-item label="账号/手机号" prop="PhoneNumber">
           <Input v-model="administratorForm.PhoneNumber" autoComplete="on" placeholder="请输入手机号"></Input>

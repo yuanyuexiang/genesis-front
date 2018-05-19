@@ -32,6 +32,7 @@
                     <Button type="ghost" icon="chevron-down" @click="modal1 = true">选择</Button>
                     <Modal
                         v-model="modal1"
+                        :scrollable="true"
                         title="选择封面">
 
                         <Scroll :on-reach-bottom="handleReachBottom">

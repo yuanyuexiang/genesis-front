@@ -29,26 +29,41 @@
                                 <div>
                                     <img class="the-only-one-thumb_url" :src="item.thumb_url"> 
                                     <span class="the-only-one-title">{{item.title}}</span>
-                                    <span class="the-only-one-digest">{{item.digest}}</span>
+                                    <span class="the-only-one-digest">{{item.title}}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <Modal
+                    title="发布准备"
+                    v-model="modalPublish"
+                    :closable="false"
+                    @on-ok="onPublish"
+                    :scrollable="true">
+                    <span>指定发布时间</span>
+                    <TimePicker
+                        :disabled-hours="[1,5,10]"
+                        placeholder="选择时间"
+                        style="margin-left: 0px;width: 168px">
+                    </TimePicker>
+                </Modal>
+                <Button class="publish" @click="modalPublish = true" :disabled="articleListNew.length<=0" type="primary">发布</Button>
+
             </Col>
             <Col span="16">
                 <Tabs value="name1">
                     <TabPane label="图文" name="name1">
                         <div class="resource-article">
                             <!-- <ArticleItem v-for="item in articleList" :article="item" :key="item.id"></ArticleItem> -->
-                            <div  v-for="article in articleList" :article="article" :key="article.id">
-                            <div class="product product-main">
-                                <router-link :to="'/product/' + article.id" class="product-main">
+                            <div v-for="article in articleList" :article="article" :key="article.id">
+                                <div class="product product-main">
                                     <img class="the-only-one-thumb_url" :src="article.thumb_url"> 
                                     <span class="the-only-one-title">{{article.title}}</span>
                                     <span class="the-only-one-digest">{{article.digest}}</span>
-                                </router-link>
-                            </div>
+                                    <!-- <div class="product-add-cart" @click.prevent="handleCart">加入购物车</div> -->
+                                    <Checkbox v-model="article.status" class="product-add-cart" @on-change="checkAllGroupChange(article)"></Checkbox>
+                                </div>
                             </div>
                         </div>
                     </TabPane>
@@ -70,12 +85,16 @@ import {
   updateArticleReviewStatus
 } from "api/resource";
 export default {
-      components: { ArticleItem },
+  components: { ArticleItem },
   data() {
     return {
       articleList: [],
-      articleListNew:[],
-      offset:0
+      articleListNew: [],
+      offset: 0,
+      theSelectedItem: [],
+      checkAll:false,
+      indeterminate: true,
+      modalPublish: false,
     };
   },
   methods: {
@@ -91,9 +110,9 @@ export default {
           }
 
           const data = responseData.data;
-          this.articleList=this.articleList.concat(data);
+          this.articleList = this.articleList.concat(data);
           console.log(this.articleList);
-          if(this.articleList != null){
+          if (this.articleList != null) {
             this.offset = this.articleList.length;
           }
           this.$Loading.finish();
@@ -103,7 +122,21 @@ export default {
           this.$Loading.error();
         });
     },
-
+    checkAllGroupChange(data) {
+      console.log("-------------------------checkAllGroupChange----------------------");
+      console.log(data);
+      if(data.status){
+        this.articleListNew.push(data)
+      }else{
+        var index = this.articleListNew.indexOf(data);
+        if (index > -1) {
+            this.articleListNew.splice(index, 1);
+        }
+      }
+    },
+    onPublish(){
+        
+    }
   },
   mounted() {
     this.listAllArticle(this.offset);
@@ -123,7 +156,7 @@ export default {
   margin-right: 80px;
 }
 .device-ios:before {
-  content: '';
+  content: "";
   width: 60px;
   height: 10px;
   border-radius: 10px;
@@ -134,7 +167,7 @@ export default {
   top: 10px;
 }
 .device-ios:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 40px;
   height: 20px;
@@ -146,85 +179,100 @@ export default {
   border: 5px solid #333;
 }
 .device-inner {
-  background-color: #FFF;
+  background-color: #fff;
   height: 100%;
 }
-.product{
-    break-inside: avoid;
-    box-sizing: border-box;
+.product {
+  break-inside: avoid;
+  box-sizing: border-box;
 }
-.product-main{
-    display: block;
-    border: 2px solid #dddee1;
-    overflow: hidden;
-    background: #fff;
-    position: relative;
+.product-main {
+  display: block;
+  border: 2px solid #dddee1;
+  overflow: hidden;
+  background: #fff;
+  position: relative;
 }
-.the-one-thumb_url{
-    width: 100%;
+.the-one-thumb_url {
+  width: 100%;
 }
-.the-one-title{
-    position: absolute;
-    left: 0;
-    color: #fff;
-    bottom: 0px;
-    margin-left: 10px;
-    margin-right: 10px;
-    text-overflow:ellipsis;
-    height: 30px;
-    line-height: 30px;
-    text-align: left
+.the-one-title {
+  position: absolute;
+  left: 0;
+  color: #fff;
+  bottom: 0px;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-overflow: ellipsis;
+  height: 30px;
+  line-height: 30px;
+  text-align: left;
 }
-.the-other-title{
-    width: 70%;
-    height: 50px;
-    line-height: 150%;
-    padding: 10px;
-    text-align: left;
-    float: left;
-    -webkit-line-clamp:2;
-    -webkit-box-orient: vertical;
-    display:-webkit-box;
-    overflow:hidden;
+.the-other-title {
+  width: 70%;
+  height: 50px;
+  line-height: 150%;
+  padding: 10px;
+  text-align: left;
+  float: left;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
 }
-.the-other-thumb_url{
-    width: 30%;
-    float: right;
+.the-other-thumb_url {
+  width: 30%;
+  float: right;
 }
-.item{
-    position: relative;
+.item {
+  position: relative;
 }
-.the-only-one-thumb_url{
-    width: 100%;
+.the-only-one-thumb_url {
+  width: 100%;
 }
-.the-only-one-title{
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-left: 10px;
-    margin-right: 10px;
-    height: 50px;
-    line-height: 150%;
-    color: black;
-    font-size: 1.2em;
-    text-align: left;
-    -webkit-line-clamp:2;
-    -webkit-box-orient: vertical;
-    display:-webkit-box;
-    overflow:hidden;
+.the-only-one-title {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 50px;
+  line-height: 150%;
+  color: black;
+  font-size: 1.2em;
+  text-align: left;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
 }
-.the-only-one-digest{
-    height: 50px;
-    line-height: 130%;
-    float: left;
-    text-align: left;
-    -webkit-line-clamp:2;
-    -webkit-box-orient: vertical;
-    display:-webkit-box;
-    margin-left: 10px;
-    margin-right: 10px;
+.the-only-one-digest {
+  height: 50px;
+  line-height: 130%;
+  float: left;
+  text-align: left;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .resource-article {
   column-count: 4;
   column-gap: 0;
+}
+.product-add-cart {
+  display: none;
+  padding: 4px 8px;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: inline-block;
+}
+.publish{
+    margin-top: 10%;
 }
 </style>

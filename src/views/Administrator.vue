@@ -7,7 +7,7 @@
                     <a class="navbar-togglerk" @click="modalPhone = true">
                         <Icon type="edit" class="myIcon"></Icon>
                     </a>
-                    <Modal v-model="modalPhone" title="修改账号/手机号" @on-ok="onChangeAdministratorPhoneNumber()" @on-cancel="cancel">
+                    <Modal :scrollable="true" v-model="modalPhone" title="修改账号/手机号" @on-ok="onChangeAdministratorPhoneNumber()" @on-cancel="cancel">
                         <Form :model="administratorChange" :label-width="80">
                             <Form-item label="新手机号">
                                 <Input v-model="administratorChange.PhoneNumber" placeholder="请输入手机号"></Input>
@@ -20,7 +20,7 @@
                     <a class="navbar-togglerk" @click="modalName = true">
                         <Icon type="edit" class="myIcon"></Icon>
                     </a>
-                    <Modal v-model="modalName" title="修改昵称" @on-ok="onChangeAdministratorName()" @on-cancel="cancel">
+                    <Modal :scrollable="true" v-model="modalName" title="修改昵称" @on-ok="onChangeAdministratorName()" @on-cancel="cancel">
                         <Form :model="administratorChange" :label-width="80">
                             <Form-item label="新昵称">
                                 <Input v-model="administratorChange.Name" placeholder="请输入昵称"></Input>
@@ -33,7 +33,7 @@
                     <a class="navbar-togglerk" @click="modalPassword = true">
                         <Icon type="edit" class="myIcon"></Icon>
                     </a>
-                    <Modal v-model="modalPassword" title="修改密码" @on-ok="onChangeAdministratorPassword()" @on-cancel="cancel">
+                    <Modal :scrollable="true" v-model="modalPassword" title="修改密码" @on-ok="onChangeAdministratorPassword()" @on-cancel="cancel">
                         <Form :model="administratorChange" :label-width="80">
                             <Form-item label="新密码">
                                 <Input v-model="administratorChange.Password" placeholder="请输入新密码"></Input>
@@ -46,7 +46,7 @@
                     <a class="navbar-togglerk" @click="modalRoles = true">
                         <Icon type="edit" class="myIcon"></Icon>
                     </a>
-                    <Modal v-model="modalRoles" title="修改权限角色" @on-ok="ok" @on-cancel="cancel">
+                    <Modal :scrollable="true" v-model="modalRoles" title="修改权限角色" @on-ok="ok" @on-cancel="cancel">
                         <!--
                         <Form :model="formItem" :label-width="80">
                             <Form-item label="当前角色">
@@ -66,7 +66,7 @@
                     <a class="navbar-togglerk" @click="modalStatus = true">
                         <Icon type="edit" class="myIcon"></Icon>
                     </a>
-                    <Modal v-model="modalStatus" title="修改权限角色" @on-ok="ok" @on-cancel="cancel">
+                    <Modal :scrollable="true" v-model="modalStatus" title="修改权限角色" @on-ok="ok" @on-cancel="cancel">
                         <span>无权修改</span>
                     </Modal>
                 </FormItem>
