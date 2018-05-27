@@ -1,9 +1,7 @@
 <template>
     <div class="animated fadeIn">
         <Row>
-            
           <Col span="16">
-
           <Form ref="articleForm" autoComplete="on" :model="articleForm" :label-width="50">
             <FormItem label="标题" prop="title">
               <Input v-model="articleForm.title" autoComplete="on" placeholder="请输入标题"></Input>
@@ -34,7 +32,6 @@
                         v-model="modal1"
                         :scrollable="true"
                         title="选择封面">
-
                         <Scroll :on-reach-bottom="handleReachBottom">
                           <Card :title="item.title" v-for="item in mediaList" :media="item" :key="item.id" style="margin: 0;cursor: pointer;">
                             <div style="text-align:center">
@@ -51,7 +48,6 @@
                     <span v-if="fileStatus!=''">{{fileStatus}}</span>
                   </div>
                   </Col>
-                  
                 </Row>
               </Col>
             </FormItem>

@@ -234,7 +234,11 @@ export default {
           saveAdministrator(administrator)
             .then(response => {
               console.log(response);
-              this.listAllAdministrator(1);
+              if(response.data.code == -1){
+                this.$Message.error("用户账号已经存在！");
+              }else{
+                this.listAllAdministrator(1);
+              }
             })
             .catch(error => {
               console.log(error);

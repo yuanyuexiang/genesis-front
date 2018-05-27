@@ -43,12 +43,14 @@
                     :scrollable="true">
                     <span>指定发布时间</span>
                     <TimePicker
-                        :disabled-hours="[1,5,10]"
+                        :disabled-hours="disabledHours"
+                        :value="theSelectedTime"
+                        @on-change="handleChange"
                         placeholder="选择时间"
                         style="margin-left: 0px;width: 168px">
                     </TimePicker>
                 </Modal>
-                <Button class="publish" @click="modalPublish = true" :disabled="articleListNew.length<=0" type="primary">发布</Button>
+                <Button class="publish" @click="onPrePublish" :disabled="articleListNew.length<=0" type="primary">发布</Button>
 
             </Col>
             <Col span="16">
@@ -77,6 +79,12 @@
 <script>
 import ArticleItem from "./components/ArticleItem.vue";
 import {
+  saveMaterialNews,
+} from "api/material";
+import {
+  createAnnouncement,
+} from "api/announcement";
+import {
   saveArticle,
   listArticle,
   getArticle,
@@ -92,9 +100,13 @@ export default {
       articleListNew: [],
       offset: 0,
       theSelectedItem: [],
-      checkAll:false,
+      checkAll: false,
       indeterminate: true,
       modalPublish: false,
+      publishTime: null,
+      theSelectedTime:null,
+      disabledHours:[],
+      formDate:{},
     };
   },
   methods: {
@@ -123,20 +135,62 @@ export default {
         });
     },
     checkAllGroupChange(data) {
-      console.log("-------------------------checkAllGroupChange----------------------");
       console.log(data);
-      if(data.status){
-        this.articleListNew.push(data)
-      }else{
+      if (data.status) {
+        this.articleListNew.push(data);
+      } else {
         var index = this.articleListNew.indexOf(data);
         if (index > -1) {
-            this.articleListNew.splice(index, 1);
+          this.articleListNew.splice(index, 1);
         }
       }
     },
-    onPublish(){
-        
-    }
+    onPrePublish() {
+      this.modalPublish = true;
+      let nowTime = new Date();
+      for(var i=0;i<nowTime.getHours();i++){
+        this.disabledHours.push(i);
+      }
+      console.log(this.disabledHours);
+      let hours = nowTime.getHours()<23?nowTime.getHours()+1:nowTime.getHours();
+      let time = hours+":"+nowTime.getMinutes()+":"+nowTime.getSeconds();
+      // //console.log("----"+dateTime);
+      // let month = nowTime.getMonth()+1<10?"0"+(nowTime.getMonth()+1):nowTime.getMonth()+1
+      // let dateTime = nowTime.getFullYear()+"-"+month+"-"+nowTime.getDate()+"T"+time+"+08:00"//nowTime.toDateString()+" "+time
+      // console.log("----"+dateTime);
+      // this.publishTime = dateTime;
+      this.theSelectedTime = time;
+      let month = nowTime.getMonth()+1<10?"0"+(nowTime.getMonth()+1):nowTime.getMonth()+1;
+      let dateTime = nowTime.getFullYear()+"-"+month+"-"+nowTime.getDate()+"T"+time+"+08:00";
+      this.publishTime = dateTime;
+    },
+    handleChange(time) {
+      let nowTime = new Date();
+      console.log(nowTime.toDateString());
+      let month = nowTime.getMonth()+1<10?"0"+(nowTime.getMonth()+1):nowTime.getMonth()+1;
+      let dateTime = nowTime.getFullYear()+"-"+month+"-"+nowTime.getDate()+"T"+time+"+08:00";
+      console.log("----"+dateTime);
+      this.publishTime = dateTime;
+    },
+    onPublish() {
+      console.log(this.disabledHours);
+      this.formDate.msgtype = "text";
+      this.formDate.content = "群发测试 群发测试 群发测试";
+      this.formDate.publish_time = this.publishTime;
+      console.log(this.formDate.publish_time);
+      createAnnouncement(this.formDate).then(response => {
+          const responseData = response.data;
+          const code = responseData.code;
+          if (code != 0) {
+            const message = responseData.message;
+            this.$Message.info(message);
+          }
+          const data = responseData.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
   },
   mounted() {
     this.listAllArticle(this.offset);
@@ -272,7 +326,7 @@ export default {
   right: 5px;
   display: inline-block;
 }
-.publish{
-    margin-top: 10%;
+.publish {
+  margin-top: 10%;
 }
 </style>

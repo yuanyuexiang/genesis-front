@@ -102,6 +102,7 @@ export default {
 .logo-youentang {
   text-align: left;
   font-size: 25px;
+  font-weight: 900;
   padding: 10px;
   color: white;
 }
