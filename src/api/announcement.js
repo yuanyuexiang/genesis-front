@@ -15,6 +15,24 @@ export function getAnnouncement(id) {
     });
 }
 
+export function getAnnouncementOpportunities() {
+    return fetch({
+        url: '/genesis/v1/announcement/opportunities',
+        method: 'get',
+    });
+}
+
+export function updateAnnouncementStatus(id,status) {
+    const data = {
+        status: status
+    }
+    return fetch({
+        url: '/genesis/v1/announcement/'+id+'/status',
+        method: 'put',
+        data
+    });
+}
+
 export function listAnnouncement(offset, limit ,query) {
     const sortby="id"
     const order="desc"

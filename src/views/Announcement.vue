@@ -1,15 +1,5 @@
 <template>
     <div class="animated fadeIn">
-        <!-- <Row>
-            <Col :md="24">
-                <h3 style="text-align:center">群发功能</h3>
-            </Col>
-        </Row>
-        <Row>
-            <Col span="24">
-                <h3 style="text-align:center">群发功能</h3>
-            </Col>
-        </Row> -->
         <Row>
             <Col span="8">
                 <div class="device-ios">
@@ -82,7 +72,7 @@ import {
   saveMaterialNews,
 } from "api/material";
 import {
-  createAnnouncement,
+  createAnnouncement,getAnnouncementOpportunities
 } from "api/announcement";
 import {
   saveArticle,
@@ -107,6 +97,7 @@ export default {
       theSelectedTime:null,
       disabledHours:[],
       formDate:{},
+      opportunities:0,
     };
   },
   methods: {
@@ -146,6 +137,10 @@ export default {
       }
     },
     onPrePublish() {
+      if(this.opportunities==0){
+        this.$Message.error("今日发布次数已经用完");
+        return;
+      }
       this.modalPublish = true;
       let nowTime = new Date();
       for(var i=0;i<nowTime.getHours();i++){
@@ -183,17 +178,36 @@ export default {
           const code = responseData.code;
           if (code != 0) {
             const message = responseData.message;
-            this.$Message.info(message);
+            this.$Message.error(message);
           }
           const data = responseData.data;
+          this.opportunities = 1;
         })
         .catch(error => {
           console.log(error);
         });
     },
+    getAnnouncementOpportunities(){
+      getAnnouncementOpportunities().then(response => {
+          const responseData = response.data;
+          const code = responseData.code;
+          if (code != 0) {
+            const message = responseData.message;
+            this.$Message.info(message);
+          }
+          const data = responseData.data;
+          this.opportunities = data;
+          console.log("--------------+++++++++++++++++++++_____________________");
+          console.log(data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   },
   mounted() {
     this.listAllArticle(this.offset);
+    this.getAnnouncementOpportunities();
   }
 };
 </script>

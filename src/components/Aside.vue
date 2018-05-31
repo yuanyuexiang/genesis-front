@@ -3,52 +3,74 @@
         <div class="aside-options">
             <div class="clearfix mt-4">
                 <h6>
-                    <b>待办事项 1</b>
-                    <i-switch class="float-right">
+                    <b>通知</b>
+                    <!-- <i-switch class="float-right">
                         <span slot="open">开</span>
                         <span slot="close">关</span>
-                    </i-switch>
+                    </i-switch> -->
                 </h6>
             </div>
             <div>
-                <p class="text-muted">明天提醒我开发系统</p>
+              <b>&nbsp</b>
+              <hr>
+            </div>
+            <div>
+                <p class="text-muted">{{msg}}</p>
             </div>
         </div>
-        <hr>
-        <!--
-    <h6>系统利用率</h6>
-      <i-circle
-        :size="200"
-        :trail-width="4"
-        :stroke-width="5"
-        :percent="75"
-        stroke-linecap="square"
-        stroke-color="#43a3fb">
-        <div class="demo-i-circle-custom">
-            <h1>42,001,776</h1>
-            <p>下载人数</p>
-            <span>
-                占总访问人数
-                <i>75%</i>
-            </span>
-        </div>
-      </i-circle>
-    <div class="text-uppercase mb-1 mt-4"><small><b>CPU Usage</b></small></div>
-    <Progress :percent="95" :stroke-width="7" status="active"></Progress>
-    <small class="text-muted">348 Processes. 1/4 Cores.</small>
-    <div class="text-uppercase mb-1 mt-2"><small><b>Memory Usage</b></small></div>
-    <Progress :percent="95" :stroke-width="7" status="wrong"></Progress>
-    <small class="text-muted">243GB/256GB</small>
-    <div class="text-uppercase mb-1 mt-2"><small><b>SSD  Usage</b></small></div>
-    <Progress :percent="25" :stroke-width="7" status="success"></Progress>
-    <small class="text-muted">25GB/256GB</small>
-    -->
     </aside>
 </template>
 
 <script>
 export default {
-  name: "aside"
+  name: "aside",
+  data() {
+    return {
+      userID: this.$store.getters.uid,
+      msg: '',
+      res: {},
+      ws: null,
+      wsurl: process.env.WEBSOCKET_URL+'/genesis/v1/websocket'
+    };
+  },
+  created() {
+    this.initws()
+  },
+  mounted() {
+    this.runws()
+  },
+  methods: {
+    runws () {
+      let content = 'userID=' + this.userID
+      if (this.ws.readyState === this.ws.OPEN) {
+        this.sendmessage(content)
+      } else if (this.ws.readyState === this.ws.CONNECTING) {
+        let that = this
+        setTimeout(function () {
+          that.sendmessage(content)
+        }, 300)
+      } else {
+        this.initws()
+        let that = this
+        setTimeout(function () {
+          that.sendmessage(content)
+        }, 500)
+      }
+    },
+    initws () {
+      this.ws = new WebSocket(this.wsurl+"?userID="+this.userID)
+      this.ws.onmessage = this.getmessage
+    },
+    getmessage (e) {
+      this.res = JSON.parse(e.data)
+      console.log(this.res.data)
+      this.$store.dispatch("addNotification",this.res.data)
+      this.msg=this.res.data.msg;
+    },
+    sendmessage (content) {
+      this.ws.send(content)
+    }
+  }
 };
 </script>
 <style type="text/css">

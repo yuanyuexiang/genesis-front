@@ -10,12 +10,12 @@
             </li>
         </ul>
         <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item d-md-down-none">
+            <!-- <li class="nav-item d-md-down-none">
                 <a class="nav-link">
                     <Icon type="android-notifications" size="20"></Icon>
                     <span class="badge badge-pill badge-danger">5</span>
                 </a>
-            </li>
+            </li> -->
             <Dropdown class="nav-item">
                 <a href="javascript:void(0)">
                     <span slot="button">
@@ -34,34 +34,43 @@
                         <p class="dropdown-itemp">
                             <Icon type="android-settings"></Icon>设置</p>
                     </Dropdown-item>
-
                     <Dropdown-item>
                         <a href="" @click="Logout">
                             <p class="dropdown-itemp">
-                                <Icon type="power"></Icon>注销</p>
+                            <Icon type="power"></Icon>注销</p>
                         </a>
                     </Dropdown-item>
                 </Dropdown-menu>
             </Dropdown>
-            <li class="nav-item d-md-down-none">
-                <a class="nav-link navbar-toggler aside-menu-toggler" @click="asideToggle">&#9776;</a>
+            <li class="nav-item d-md-down-none nav-link">
+                <Badge dot :count="notification_count">
+                    <a class="nav-link navbar-toggler aside-menu-toggler" @click="asideToggle">&#9776;</a>
+                </Badge>
             </li>
         </ul>
     </navbar>
 </template>
 <script>
 import navbar from "./Navbar";
-
+import { mapGetters } from "vuex";
 export default {
   name: "header",
   data() {
     return {
       roles: this.$store.getters.roles.toString(),
-      userName: this.$store.getters.name
+      userName: this.$store.getters.name,
+      count:1,
     };
   },
   components: {
     navbar
+  },
+  created() {
+  },
+  mounted() {
+  },
+  computed: {
+    ...mapGetters(["notification_count"])
   },
   methods: {
     Logout(e) {
@@ -92,12 +101,22 @@ export default {
     },
     asideToggle(e) {
       e.preventDefault();
+      console.log(e.target);
+      this.$store.dispatch("delNotification");
       document.body.classList.toggle("aside-menu-hidden");
-    }
+    },
   }
 };
 </script>
-
+<style>
+.demo-badge-alone{
+    background: #ed3f14 !important;
+    height: 12px;
+    width: 12px;
+    top: -5px;
+    line-height: 8px;
+}
+</style>
 <style type="text/css" scoped>
 .logo-youentang {
   text-align: left;
@@ -125,6 +144,9 @@ export default {
 }
 .navbar {
     background-color: #1d355b;
+}
+.demo-badge-alone{
+    background: #5cb85c !important;
 }
 /*1d355b*/
 </style>
