@@ -21,7 +21,7 @@ import IntroChartPie from "./charts/IntroChartPie";
 
 export default {
   components: { IntroChartCount, IntroChartPie },
-  name: "dashboard",
+  name: "introduction",
   data() {
     return {
       value1: 0,
@@ -55,8 +55,5 @@ export default {
 }
 .content {
   padding-left: 5px;
-}
-.dashboard_feature {
-  text-align: center;
 }
 </style>
