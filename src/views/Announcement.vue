@@ -138,7 +138,9 @@ export default {
       let nowTime = new Date();
       console.log(nowTime.toDateString());
       let month = nowTime.getMonth()+1<10?"0"+(nowTime.getMonth()+1):nowTime.getMonth()+1;
-      let dateTime = nowTime.getFullYear()+"-"+month+"-"+nowTime.getDate()+"T"+time+"+08:00";
+      let day = nowTime.getDate()<10?"0"+nowTime.getDate():nowTime.getDate();
+      console.log("--------------onPrePublish"+day);
+      let dateTime = nowTime.getFullYear()+"-"+month+"-"+day+"T"+time+"+08:00";
       console.log("----"+dateTime);
       this.publishTime = dateTime;
     },
@@ -172,24 +174,24 @@ export default {
       }
       console.log(this.disabledHours);
       let hours = nowTime.getHours()<23?nowTime.getHours()+1:nowTime.getHours();
-      let time = hours+":"+nowTime.getMinutes()+":"+nowTime.getSeconds();
-      // //console.log("----"+dateTime);
-      // let month = nowTime.getMonth()+1<10?"0"+(nowTime.getMonth()+1):nowTime.getMonth()+1
-      // let dateTime = nowTime.getFullYear()+"-"+month+"-"+nowTime.getDate()+"T"+time+"+08:00"//nowTime.toDateString()+" "+time
-      // console.log("----"+dateTime);
-      // this.publishTime = dateTime;
+      let minutes = nowTime.getMinutes()<10?"0"+nowTime.getMinutes():nowTime.getMinutes();
+      let seconds = nowTime.getSeconds()<10?"0"+nowTime.getSeconds():nowTime.getSeconds();
+      let time = hours+":"+minutes+":"+seconds;
       this.theSelectedTime = time;
       let month = nowTime.getMonth()+1<10?"0"+(nowTime.getMonth()+1):nowTime.getMonth()+1;
-      let dateTime = nowTime.getFullYear()+"-"+month+"-"+nowTime.getDate()+"T"+time+"+08:00";
+      let day = nowTime.getDate()<10?"0"+nowTime.getDate():nowTime.getDate();
+      console.log("--------------onPrePublish"+day);
+      let dateTime = nowTime.getFullYear()+"-"+month+"-"+day+"T"+time+"+08:00";
       this.publishTime = dateTime;
     },
     onPublish() {
       console.log(this.disabledHours);
       this.saveTheMaterialNews();
     },
-    createTheAnnouncement(){
-      this.formData.msgtype = "text";
-      this.formData.content = "群发测试 群发测试 群发测试";
+    createTheAnnouncement(msgtype,content){
+      console.log("--------------createTheAnnouncement");
+      this.formData.msgtype = msgtype;
+      this.formData.content = content;
       this.formData.publish_time = this.publishTime;
       console.log(this.formData.publish_time);
       createAnnouncement(this.formData).then(response => {
@@ -200,7 +202,7 @@ export default {
             this.$Message.error(message);
           }else{
             const data = responseData.data;
-            this.opportunities = 1;
+            this.opportunities = 0;
           }
         }).catch(error => {
           console.log(error);
@@ -216,12 +218,14 @@ export default {
             this.$Message.error(message);
           }else{
             const data = responseData.data;
-            console.log("--------------+++++++++++++++++++++_____________________");
+            console.log("--------------saveMaterialNews");
             console.log(data);
+            this.createTheAnnouncement("mpnews",data.media_id)
           }
         }).catch(error => {
           console.log(error);
         });
+        //this.createTheAnnouncement("mpnews","veGqgUyyDjm6XJsAAK46WjuiKI6URbP77Uaepy3GnaU")
     }
   },
   mounted() {
