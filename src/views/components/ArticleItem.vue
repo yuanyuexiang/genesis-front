@@ -1,57 +1,140 @@
 <template>
     <div class="product product-main">
-        <router-link :to="'/product/' + article.id" class="product-main">
-            <img class="the-only-one-thumb_url" :src="article.thumb_url"> 
+        <div @click="editArticle(article)" class="product-main">
+            <div :class="'subscript subscript-color'+ article.review_status">{{subscriptText}}</div> 
+            <img class="the-only-one-thumb_url" :src="article.thumb_url">
             <span class="the-only-one-title">{{article.title}}</span>
             <span class="the-only-one-digest">{{article.digest}}</span>
-        </router-link>
+            <Button type="ghost" class="article-delete" @click.stop="deleteArticle(article)">删除</Button>
+            <Button type="ghost" class="article-review" @click.stop="reviewArticle(article)">评审</Button>
+        </div>
+        <Modal v-model="modalReview" :scrollable="true" title="评审" ok-text="通过" cancel-text="不通过" @on-ok="onReviewPassArticle()" @on-cancel="onReviewNotPassArticle()">
+            <h4 style="text-align: center">{{article.title}}</h4>
+            <div style="text-align: center;">&nbsp</div>
+            <div style="text-align: center;">作者:{{article.author}}</div>
+            <div v-html="article.content"></div>
+        </Modal>
     </div>
 </template>
 <script>
-    export default {
-        props: {
-            article: Object
-        },
-        data () {
-            return {
-                colors: {
-                    '白色': '#ffffff',
-                    '金色': '#dac272',
-                    '蓝色': '#233472',
-                    '红色': '#f2352e'
-                },
-                news_item:[
-                    {
-                        url:'http://c.hiphotos.baidu.com/image/h%3D300/sign=e7ea61e75dda81cb51e685cd6267d0a4/4bed2e738bd4b31ccd851da88bd6277f9e2ff86c.jpg',
-                        title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。'
-                    },
-                    {
-                        url:'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1767309032,288351360&fm=58&s=61EDBE468CA449131EA6F27A0300F07B&bpow=121&bpoh=75',
-                        title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。'
-                    },
-                    {
-                        url:'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1767309032,288351360&fm=58&s=61EDBE468CA449131EA6F27A0300F07B&bpow=121&bpoh=75',
-                        title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。'
-                    },
-                    {
-                        url:'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1767309032,288351360&fm=58&s=61EDBE468CA449131EA6F27A0300F07B&bpow=121&bpoh=75',
-                        title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。'
-                    }
-                ]
-
-            }
-        },
-        methods: {
-            handleCart () {
-                this.$store.commit('addCart', this.info.id);
-                let x = materialNews;
-            }
-        },
-        mounted(){
-            //alert(JSON.stringify(this.materialNews.content.news_item.length));
+import {
+  saveArticle,
+  listArticle,
+  getArticle,
+  updateArticle,
+  deleteArticle,
+  updateArticleReviewStatus,
+} from "api/resource";
+export default {
+    props: {
+        article: Object
+    },
+    data () {
+        return {
+            modalReview:false,
+            subscriptText:"未评审",
         }
-    };
+    },
+    methods: {
+        handleCart(){
+            this.$store.commit('addCart', this.info.id);
+            let x = materialNews;
+        },
+        editArticle(article){
+            this.$router.push({path:"/resource/editArticle"});
+            this.$store.dispatch("postData",article)
+        },
+        deleteArticle(article){
+            console.log(article)
+            deleteArticle(article.id).then(response => {
+                const responseData = response.data;
+                const code = responseData.code;
+                if (code != 0) {
+                    const message = responseData.message;
+                    this.$Message.info(message);
+                }else{
+                    this.$emit("eventFromArticleItem",article)
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+        reviewArticle(article){
+            console.log(article);
+            this.modalReview = true;
+        },
+        onReviewPassArticle(){
+            updateArticleReviewStatus(this.article.id,{review_status:1}).then(response => {
+                const responseData = response.data;
+                const code = responseData.code;
+                if (code != 0) {
+                    const message = responseData.message;
+                    this.$Message.info(message);
+                }else{
+                    this.article.review_status = 1;
+                    this.subscriptText = "通过";
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+        onReviewNotPassArticle(){
+            updateArticleReviewStatus(this.article.id,{review_status:-1}).then(response => {
+                const responseData = response.data;
+                const code = responseData.code;
+                if (code != 0) {
+                    const message = responseData.message;
+                    this.$Message.info(message);
+                }else{
+                    this.article.review_status = -1;
+                    this.subscriptText = "未通过";
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+    },
+    created() {
+        if (this.article.review_status == 1){
+            this.subscriptText = "通过";
+        }else if (this.article.review_status == -1){
+            this.subscriptText = "未通过";
+        }else{
+            this.subscriptText = "未评审";
+        }
+    },
+};
 </script>
+<style>
+    .subscript{
+        color: #fff;
+        height: 25px;
+        width: 90px;
+        position: absolute;
+        right: -30px;
+        text-align: center;
+        line-height: 30px;
+        font-family: "黑体";
+        -moz-transform:rotate(45deg);
+        -webkit-transform:rotate(45deg);
+        -o-transform:rotate(45deg);
+        -ms-transform:rotate(45deg);
+        transform:rotate(45deg);
+    }
+    .subscript-color0{
+        background-color: #0c60ee;
+    }
+    .subscript-color1{
+        background-color: #5cb85c;
+    }
+    .subscript-color-1{
+        background-color: #ed3f14;
+    }
+</style>
+
 <style scoped>
     h4{
         color: #222;
@@ -74,19 +157,30 @@
         color: #de4037;
         margin-top: 6px;
     }
-    .product-add-cart{
+    .article-delete{
         display: none;
         padding: 4px 8px;
-        background: #2d8cf0;
-        color: #fff;
         font-size: 12px;
         border-radius: 3px;
         cursor: pointer;
         position: absolute;
-        top: 5px;
+        bottom: 5px;
+        left: 5px;
+    }
+    .article-review{
+        display: none;
+        padding: 4px 8px;
+        font-size: 12px;
+        border-radius: 3px;
+        cursor: pointer;
+        position: absolute;
+        bottom: 5px;
         right: 5px;
     }
-    .product-main:hover .product-add-cart{
+    .product-main:hover .article-review{
+        display: inline-block;
+    }
+    .product-main:hover .article-delete{
         display: inline-block;
     }
     .product{
@@ -103,6 +197,7 @@
         padding: 16px;
         
         border-radius: 6px;*/
+        cursor:pointer;
         overflow: hidden;
         background: #fff;
         position: relative;
@@ -172,4 +267,5 @@
         margin-left: 10px;
         margin-right: 10px;
     }
+    
 </style>

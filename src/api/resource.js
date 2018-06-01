@@ -25,6 +25,24 @@ export function listArticle(offset, limit) {
     });
 }
 
+export function listArticleReviewStatus(offset, limit, status) {
+    const sortby="update_time"
+    const order="desc"
+    const query="review_status:"+status
+    const params = {
+        offset,
+        limit,
+        sortby,
+        order,
+        query,
+    };
+    return fetch({
+        url: '/genesis/v1/article',
+        method: 'get',
+        params
+    });
+}
+
 export function getArticle(id) {
     return fetch({
         url: '/genesis/v1/article/' + id,
@@ -47,10 +65,11 @@ export function deleteArticle(id) {
     });
 }
 
-export function updateArticleReviewStatus(id) {
+export function updateArticleReviewStatus(id,data) {
     return fetch({
-        url: '/genesis/v1/article/' + id + 'reviewStatus',
-        method: 'put'
+        url: '/genesis/v1/article/' + id + '/reviewStatus',
+        method: 'put',
+        data
     });
 }
 

@@ -15,5 +15,6 @@ const getters = {
     addRouters: state => state.permission.addRouters,
     siderbar_routers: state => state.permission.siderbar_routers,
     notification_count:state => state.notification.count,
+    postoffice_data:state => state.postoffice.data,
 };
 export default getters

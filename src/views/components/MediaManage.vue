@@ -42,7 +42,9 @@ export default {
           }
 
           const data = responseData.data;
-          this.mediaList = this.mediaList.concat(data);;
+          if(data!=null){
+            this.mediaList = this.mediaList.concat(data);
+          }
           console.log(this.mediaList);
           if(this.mediaList != null){
             this.offset = this.mediaList.length;

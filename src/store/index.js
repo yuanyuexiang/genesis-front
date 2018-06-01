@@ -4,6 +4,7 @@ import app from './modules/app';
 import user from './modules/user';
 import permission from './modules/permission';
 import notification from './modules/notification';
+import postoffice from './modules/postoffice';
 import getters from './getters';
 
 Vue.use(Vuex);
@@ -14,6 +15,7 @@ const store = new Vuex.Store({
         user,
         permission,
         notification,
+        postoffice,
     },
     getters
 });

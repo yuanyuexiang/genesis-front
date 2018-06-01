@@ -1,6 +1,6 @@
 <template>
     <div class="resource-article">
-        <ArticleItem v-for="item in articleList" :article="item" :key="item.id"></ArticleItem>
+        <ArticleItem v-for="(item) in articleList" :article="item" :key="item.id" @eventFromArticleItem="eventFromArticleItem"></ArticleItem>
     </div>
 </template>
 
@@ -38,13 +38,15 @@ export default {
             const message = responseData.message;
             this.$Message.info(message);
           }
-
           const data = responseData.data;
-          this.articleList=this.articleList.concat(data);
-          console.log(this.articleList);
+          if(data != null){
+            this.articleList=this.articleList.concat(data);
+          }
           if(this.articleList != null){
             this.offset = this.articleList.length;
           }
+          console.log("---------------===============================--------------------------");
+          console.log(this.articleList);
           this.$Loading.finish();
         })
         .catch(error => {
@@ -57,9 +59,16 @@ export default {
       console.log(this.$router);
     },
     onScrollButtom() {
-        console.log("----------------------------arb----------------------------------");
         this.listAllArticle(this.offset);
-    }
+    },
+    eventFromArticleItem(article){
+        console.log("---------eventFromArticleItem------");
+        console.log(article);
+        var index = this.articleList.indexOf(article);
+        if (index > -1) {
+          this.articleList.splice(index, 1);
+        }
+    },
   },
   mounted() {
     this.listAllArticle(this.offset);

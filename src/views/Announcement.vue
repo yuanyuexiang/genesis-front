@@ -44,8 +44,8 @@
 
             </Col>
             <Col span="16">
-                <Tabs value="name1">
-                    <TabPane label="图文" name="name1">
+                <Tabs @on-click="onTabClick" id="tabs" :value="tabName">
+                    <TabPane label="图文" name="mpnews">
                         <div class="resource-article">
                             <!-- <ArticleItem v-for="item in articleList" :article="item" :key="item.id"></ArticleItem> -->
                             <div v-for="article in articleList" :article="article" :key="article.id">
@@ -59,7 +59,7 @@
                             </div>
                         </div>
                     </TabPane>
-                    <TabPane label="图片" name="name2">图片</TabPane>
+                    <TabPane label="图片" name="image">图片</TabPane>
                 </Tabs>
             </Col>
         </Row>
@@ -75,12 +75,7 @@ import {
   createAnnouncement,getAnnouncementOpportunities
 } from "api/announcement";
 import {
-  saveArticle,
-  listArticle,
-  getArticle,
-  updateArticle,
-  deleteArticle,
-  updateArticleReviewStatus
+  listArticleReviewStatus,
 } from "api/resource";
 export default {
   components: { ArticleItem },
@@ -96,14 +91,16 @@ export default {
       publishTime: null,
       theSelectedTime:null,
       disabledHours:[],
-      formDate:{},
+      formData:{},
       opportunities:0,
+      formMaterialNews:{},
+      tabName: "mpnews",
     };
   },
   methods: {
     listAllArticle(offset) {
       this.$Loading.start();
-      listArticle(offset, 8)
+      listArticleReviewStatus(offset,8,1)
         .then(response => {
           const responseData = response.data;
           const code = responseData.code;
@@ -114,6 +111,7 @@ export default {
 
           const data = responseData.data;
           this.articleList = this.articleList.concat(data);
+          console.log("-----------------------listArticleReviewStatus---------------------------");
           console.log(this.articleList);
           if (this.articleList != null) {
             this.offset = this.articleList.length;
@@ -135,6 +133,32 @@ export default {
           this.articleListNew.splice(index, 1);
         }
       }
+    },
+    handleChange(time) {
+      let nowTime = new Date();
+      console.log(nowTime.toDateString());
+      let month = nowTime.getMonth()+1<10?"0"+(nowTime.getMonth()+1):nowTime.getMonth()+1;
+      let dateTime = nowTime.getFullYear()+"-"+month+"-"+nowTime.getDate()+"T"+time+"+08:00";
+      console.log("----"+dateTime);
+      this.publishTime = dateTime;
+    },
+    getTheAnnouncementOpportunities(){
+      getAnnouncementOpportunities().then(response => {
+          const responseData = response.data;
+          const code = responseData.code;
+          if (code != 0) {
+            const message = responseData.message;
+            this.$Message.info(message);
+            return;
+          }
+          const data = responseData.data;
+          this.opportunities = data;
+        }).catch(error => {
+          console.log(error);
+        });
+    },
+    onTabClick(name){
+      this.tabName=name;
     },
     onPrePublish() {
       if(this.opportunities==0){
@@ -159,55 +183,50 @@ export default {
       let dateTime = nowTime.getFullYear()+"-"+month+"-"+nowTime.getDate()+"T"+time+"+08:00";
       this.publishTime = dateTime;
     },
-    handleChange(time) {
-      let nowTime = new Date();
-      console.log(nowTime.toDateString());
-      let month = nowTime.getMonth()+1<10?"0"+(nowTime.getMonth()+1):nowTime.getMonth()+1;
-      let dateTime = nowTime.getFullYear()+"-"+month+"-"+nowTime.getDate()+"T"+time+"+08:00";
-      console.log("----"+dateTime);
-      this.publishTime = dateTime;
-    },
     onPublish() {
       console.log(this.disabledHours);
-      this.formDate.msgtype = "text";
-      this.formDate.content = "群发测试 群发测试 群发测试";
-      this.formDate.publish_time = this.publishTime;
-      console.log(this.formDate.publish_time);
-      createAnnouncement(this.formDate).then(response => {
+      this.saveTheMaterialNews();
+    },
+    createTheAnnouncement(){
+      this.formData.msgtype = "text";
+      this.formData.content = "群发测试 群发测试 群发测试";
+      this.formData.publish_time = this.publishTime;
+      console.log(this.formData.publish_time);
+      createAnnouncement(this.formData).then(response => {
           const responseData = response.data;
           const code = responseData.code;
           if (code != 0) {
             const message = responseData.message;
             this.$Message.error(message);
+          }else{
+            const data = responseData.data;
+            this.opportunities = 1;
           }
-          const data = responseData.data;
-          this.opportunities = 1;
-        })
-        .catch(error => {
+        }).catch(error => {
           console.log(error);
         });
     },
-    getAnnouncementOpportunities(){
-      getAnnouncementOpportunities().then(response => {
+    saveTheMaterialNews(){
+      this.formMaterialNews.items = this.articleListNew;
+      saveMaterialNews(this.formMaterialNews).then(response => {
           const responseData = response.data;
           const code = responseData.code;
           if (code != 0) {
             const message = responseData.message;
-            this.$Message.info(message);
+            this.$Message.error(message);
+          }else{
+            const data = responseData.data;
+            console.log("--------------+++++++++++++++++++++_____________________");
+            console.log(data);
           }
-          const data = responseData.data;
-          this.opportunities = data;
-          console.log("--------------+++++++++++++++++++++_____________________");
-          console.log(data);
-        })
-        .catch(error => {
+        }).catch(error => {
           console.log(error);
         });
     }
   },
   mounted() {
     this.listAllArticle(this.offset);
-    this.getAnnouncementOpportunities();
+    this.getTheAnnouncementOpportunities();
   }
 };
 </script>
