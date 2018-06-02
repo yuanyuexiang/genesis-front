@@ -35,7 +35,7 @@ export function updateAnnouncementStatus(id,status) {
 
 export function getAnnouncementCount() {
     return fetch({
-        url: '/genesis/v1/user/count',
+        url: '/genesis/v1/announcement/count',
         method: 'get',
     });
 }
