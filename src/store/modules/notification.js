@@ -8,10 +8,7 @@ const notification = {
             console.log(data)
         },
         DEL_NOTIFICATION: (state) => {
-            state.count = state.count - 1;
-            if(state.count < 0){
-                state.count = 0;
-            }
+            state.count = 0;
         }
     },
     actions: {

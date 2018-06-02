@@ -14,8 +14,8 @@
               <b>&nbsp</b>
               <hr>
             </div>
-            <div>
-                <p class="text-muted">{{msg}}</p>
+            <div v-for="(item) in msgList" :key="item">
+                <p class="text-muted">{{item}}</p>
             </div>
         </div>
     </aside>
@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       userID: this.$store.getters.uid,
-      msg: '',
+      msgList: [],
       res: {},
       ws: null,
       wsurl: process.env.WEBSOCKET_URL+'/genesis/v1/websocket'
@@ -65,7 +65,7 @@ export default {
       this.res = JSON.parse(e.data)
       console.log(this.res.data)
       this.$store.dispatch("addNotification",this.res.data)
-      this.msg=this.res.data.msg;
+      this.msgList.push(this.res.data.msg);
     },
     sendmessage (content) {
       this.ws.send(content)
