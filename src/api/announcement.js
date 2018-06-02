@@ -33,6 +33,13 @@ export function updateAnnouncementStatus(id,status) {
     });
 }
 
+export function getAnnouncementCount() {
+    return fetch({
+        url: '/genesis/v1/user/count',
+        method: 'get',
+    });
+}
+
 export function listAnnouncement(offset, limit ,query) {
     const sortby="id"
     const order="desc"

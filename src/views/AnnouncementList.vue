@@ -4,10 +4,10 @@
             <Col :md="24">
                 <div>
                     <div id="container">
-                        <span class="allUser">当前公众号订阅用户</span>
+                        <span class="allAnnouncement">发布历史</span>
                     </div>
                     <div style="position:relative;">
-                        <Table stripe :columns="columns" :data="userList" ref="table"></Table>
+                        <Table stripe :columns="columns" :data="announcementList" ref="table"></Table>
                         <div style="position:absolute;top:0px;width:100%;height:100%;display: flex;
                                                 align-items: center;
                                                 justify-content: center;background: rgba(210, 216, 222, 0.5);" v-if="list_loadding">
@@ -24,25 +24,25 @@
 
 <script>
 import {
-  deleteUser,
-  listUser,
-  getUserCount,
-} from "api/user";
+  deleteAnnouncement,
+  listAnnouncement,
+  getAnnouncementCount,
+} from "api/announcement";
 export default {
     name: "buttons",
     data() {
         return {
             columns: [
             {
-                title: "用户类型",
-                key: "subscribe",
+                title: "是否群发",
+                key: "is_to_all",
                 width: 100,
                 render: (h, params) => {
                     let text = '';
-                    if(params.row.subscribe === 1){
-                        text = '订阅用户';
+                    if(params.row.is_to_all === true){
+                        text = '是';
                     }else{
-                        text = '未订阅用户';
+                        text = '否';
                     }
                     return h("div", [
                     h("span", text)
@@ -50,27 +50,43 @@ export default {
                 },
             },
             {
-                title: "公众号ID",
-                key: "openid",
+                title: "标签ID",
+                key: "tag_id",
                 align: "center",
-                width: 300,
+                width: 80,
             },
             {
-                title: "昵称",
-                key: "nickname",
+                title: "消息类型",
+                key: "msgtype",
                 width: 100,
             },
             {
-                title: "性别",
-                key: "sex",
+                title: "内容",
+                key: "content",
+            },
+            {
+                title: "错误码",
+                key: "errcode",
+                width: 100,
+            },
+            {
+                title: "错误",
+                key: "errmsg",
+                width: 100,
+            },
+            {
+                title: "状态",
+                key: "status",
                 align: "center",
                 width: 100,
                 render: (h, params) => {
                     let text = '';
-                    if(params.row.sex === 1){
-                        text = '男';
-                    }else{
-                        text = '女';
+                    if(params.row.status === 1){
+                        text = '已发布';
+                    }else if(params.row.status === -1) {
+                        text = '已取消';
+                    }else {
+                        text = '发布中';
                     }
                     return h("div", [
                     h("span", text)
@@ -78,33 +94,12 @@ export default {
                 }
             },
             {
-                title: "城市",
-                key: "city",
-                width: 100,
-            },
-            // {
-            //     title: "国家",
-            //     key: "country"
-            // },
-            // {
-            //     title: "省",
-            //     key: "province",
-            // },
-            // {
-            //     title: "语言",
-            //     key: "language",
-            // },
-            // {
-            //     title: "头像",
-            //     key: "headimgurl",
-            // },
-            {
-                title: "订阅时间",
-                key: "subscribe_time",
-                width: 200,
+                title: "创建时间",
+                key: "create_time",
+                width: 150,
                 align: "center",
                 render: (h, params) => {
-                    let now = new Date(params.row.subscribe_time*1000);
+                    let now = new Date(params.row.create_time);
                     let year=now.getFullYear();    
                     let month=now.getMonth()+1;    
                     let date=now.getDate();    
@@ -115,25 +110,25 @@ export default {
                     return h("div", [h("span", text)]);
                 }
             },
-            // {
-            //     title: "联盟ID",
-            //     key: "unionid",
-            // },
             {
-                title: "备注",
-                key: "remark",
+                title: "发布时间",
+                key: "publish_time",
+                align: "center",
+                width: 150,
+                render: (h, params) => {
+                    let now = new Date(params.row.publish_time);
+                    let year=now.getFullYear();    
+                    let month=now.getMonth()+1;    
+                    let date=now.getDate();    
+                    let hour=now.getHours();    
+                    let minute=now.getMinutes();    
+                    let second=now.getSeconds();    
+                    let text =  year+"-"+month+"-"+date+"   "+hour+":"+minute+":"+second;
+                    return h("div", [h("span", text)]);
+                }
             },
-            // {
-            //     title: "分组ID",
-            //     key: "groupid",
-            // },
-            {
-                title: "类别",
-                key: "type",
-                align: "right",
-            }
             ],
-            userList: [],
+            announcementList: [],
             pageTotal: 1,
             lodding: false,
             list_loadding: false,
@@ -141,15 +136,15 @@ export default {
     },
     methods: {
         setInitPage(page) {
-            this.listAllUser(page);
+            this.listAllAnnouncement(page);
         },
-        listAllUser(page) {
-            listUser((page - 1) * 10,10)
+        listAllAnnouncement(page) {
+            listAnnouncement((page - 1) * 10,10)
                 .then(response => {
                     const responseData = response.data;
                     const data = responseData.data;
                     console.log(data);
-                    this.userList = data;
+                    this.announcementList = data;
                     this.list_loadding = false;
                 })
                 .catch(error => {
@@ -159,8 +154,8 @@ export default {
                 this.list_loadding = false;
             }, 2000);
         },
-        getAllUserCount() {
-            getUserCount()
+        getAllAnnouncementCount() {
+            getAnnouncementCount()
                 .then(response => {
                     const responseData = response.data;
                     const data = responseData.data;
@@ -177,8 +172,8 @@ export default {
     },
     mounted() {
         this.list_loadding = true;
-        this.getAllUserCount();
-        this.listAllUser(1);
+        this.getAllAnnouncementCount();
+        this.listAllAnnouncement(1);
     }
 }
 </script>

@@ -44,6 +44,14 @@
 
             </Col>
             <Col span="16">
+
+              <div id="container">
+                  <span class="allResource">评审通过的素材资源</span>
+                  <span class="goAnnouncementList">
+                    <router-link to="/announcement/list">发布历史</router-link>
+                  </span>
+                </div>
+
                 <Tabs @on-click="onTabClick" id="tabs" :value="tabName">
                     <TabPane label="图文" name="mpnews">
                         <div class="resource-article">
@@ -203,6 +211,7 @@ export default {
           }else{
             const data = responseData.data;
             this.opportunities = 0;
+            this.$router.push({path:"/announcement/list"});
           }
         }).catch(error => {
           console.log(error);
@@ -365,5 +374,16 @@ export default {
 }
 .publish {
   margin-top: 10%;
+}
+.goAnnouncementList {
+  float: right;
+  display: inline-block;
+  width: 50%;
+  text-align: right;
+  color: #2d8cf0;
+}
+.allResource {
+  display: inline-block;
+  width: 49.5%;
 }
 </style>

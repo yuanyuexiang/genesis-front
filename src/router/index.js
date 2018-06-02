@@ -53,10 +53,11 @@ export const asyncRouterMap = [
             { path: '/resource/editArticle', name: '编辑图文', icon: 'mic-c', params: {}, component: _import('ResourceArticleEdit'),hidden: true},
             { path: '/resource/addMedia', name: '添加媒体', icon: 'mic-c', component: _import('ResourceMediaAdd'),hidden: true},
             { path: '/resource/editMedia', name: '编辑媒体', icon: 'mic-c', component: _import('ResourceMediaEdit'),hidden: true},
-            { path: '/announcement', name: '群发功能', icon: 'speakerphone', component: _import('Announcement')},
+            { path: '/announcement/add', name: '群发功能', icon: 'speakerphone', component: _import('Announcement')},
+            { path: '/announcement/list', name: '群发历史', icon: 'chatbox-working', component: _import('AnnouncementList'),hidden: true},
             { path: '/interaction', name: '微信互动', icon: 'link', component: _import('Interaction')},
             { path: '/user', name: '用户管理', icon: 'ios-people', component: _import('UserManage')},
-            { path: '/message', name: '消息管理', icon: 'chatbox-working', component: _import('MessageManage')},
+            // { path: '/message', name: '消息管理', icon: 'chatbox-working', component: _import('MessageManage')},
             
             /*
             { path: '/dashboard', name: 'Dashboard', icon: 'speedometer', component: _import('Dashboard') },
