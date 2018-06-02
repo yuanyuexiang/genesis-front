@@ -45,8 +45,6 @@ export default {
           if(this.articleList != null){
             this.offset = this.articleList.length;
           }
-          console.log("---------------===============================--------------------------");
-          console.log(this.articleList);
           this.$Loading.finish();
         })
         .catch(error => {
@@ -62,8 +60,6 @@ export default {
         this.listAllArticle(this.offset);
     },
     eventFromArticleItem(article){
-        console.log("---------eventFromArticleItem------");
-        console.log(article);
         var index = this.articleList.indexOf(article);
         if (index > -1) {
           this.articleList.splice(index, 1);

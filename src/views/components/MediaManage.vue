@@ -1,6 +1,6 @@
 <template>
-  <div class="resource-article">
-    <MediaItem v-for="item in mediaList" :media="item" :key="item.id"></MediaItem>
+  <div class="resource-media">
+    <MediaItem v-for="item in mediaList" :media="item" :key="item.id" @eventFromMediaItem="eventFromMediaItem"></MediaItem>
   </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
       filterBrand: "",
       filterColor: "",
       order: "",
-      articleList: [],
+      mediaList: [],
       mediaList: [],
       scroll: "",
       offset:0
@@ -57,9 +57,14 @@ export default {
         });
     },
     onScrollButtom() {
-        console.log("----------------------------meb----------------------------------");
         this.listAllMedia(this.offset);
-    }
+    },
+    eventFromMediaItem(media){
+        var index = this.mediaList.indexOf(media);
+        if (index > -1) {
+          this.mediaList.splice(index, 1);
+        }
+    },
   },
   mounted() {
     this.listAllMedia(this.offset);
@@ -97,7 +102,7 @@ export default {
   text-align: center;
   padding: 32px;
 }
-.resource-article {
+.resource-media {
   column-count: 4;
   column-gap: 0;
 }

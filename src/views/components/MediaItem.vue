@@ -1,57 +1,139 @@
 <template>
     <div class="product product-main">
-        <router-link :to="'/product/' + media.id" class="product-main">
+        <div @click="editMedia(media)" class="product-main">
+            <div :class="'subscript subscript-color'+ media.review_status">{{subscriptText}}</div> 
             <img class="the-only-one-thumb_url" :src="media.url"> 
             <span class="the-only-one-title">{{media.title}}</span>
             <span class="the-only-one-digest">{{media.introduction}}</span>
-        </router-link>
+            <Button type="ghost" class="media-delete" @click.stop="deleteMedia(media)">删除</Button>
+            <Button type="ghost" class="media-review" @click.stop="reviewMedia(media)">评审</Button>
+        </div>
+        <Modal v-model="modalReview" :scrollable="true" title="评审" ok-text="通过" cancel-text="不通过" @on-ok="onReviewPassMedia()" @on-cancel="onReviewNotPassMedia()">
+            <h4 style="text-align: center">{{media.title}}</h4>
+            <div style="text-align: center;">&nbsp</div>
+            <div style="text-align: center;">作者:{{media.author}}</div>
+            <div v-html="media.content"></div>
+        </Modal>
     </div>
 </template>
 <script>
-    export default {
-        props: {
-            media: Object
-        },
-        data () {
-            return {
-                colors: {
-                    '白色': '#ffffff',
-                    '金色': '#dac272',
-                    '蓝色': '#233472',
-                    '红色': '#f2352e'
-                },
-                news_item:[
-                    {
-                        url:'http://c.hiphotos.baidu.com/image/h%3D300/sign=e7ea61e75dda81cb51e685cd6267d0a4/4bed2e738bd4b31ccd851da88bd6277f9e2ff86c.jpg',
-                        title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。'
-                    },
-                    {
-                        url:'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1767309032,288351360&fm=58&s=61EDBE468CA449131EA6F27A0300F07B&bpow=121&bpoh=75',
-                        title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。'
-                    },
-                    {
-                        url:'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1767309032,288351360&fm=58&s=61EDBE468CA449131EA6F27A0300F07B&bpow=121&bpoh=75',
-                        title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。'
-                    },
-                    {
-                        url:'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1767309032,288351360&fm=58&s=61EDBE468CA449131EA6F27A0300F07B&bpow=121&bpoh=75',
-                        title:'我们在天上的父，愿人都尊你的名为圣。愿你的国降临，愿你的旨意行在地上，如同行在天上。'
-                    }
-                ]
-
-            }
-        },
-        methods: {
-            handleCart () {
-                this.$store.commit('addCart', this.info.id);
-                let x = materialNews;
-            }
-        },
-        mounted(){
-            //alert(JSON.stringify(this.materialNews.content.news_item.length));
+import {
+  saveMedia,
+  listMedia,
+  getMedia,
+  updateMedia,
+  deleteMedia,
+  updateMediaReviewStatus,
+} from "api/resource";
+export default {
+    props: {
+        media: Object
+    },
+    data () {
+        return {
+            modalReview:false,
+            subscriptText:"未评审",
         }
-    };
+    },
+    methods: {
+        handleCart(){
+            this.$store.commit('addCart', this.info.id);
+            let x = materialNews;
+        },
+        editMedia(media){
+            this.$router.push({path:"/resource/editMedia"});
+            this.$store.dispatch("postData",media)
+        },
+        deleteMedia(media){
+            console.log(media)
+            deleteMedia(media.id).then(response => {
+                const responseData = response.data;
+                const code = responseData.code;
+                if (code != 0) {
+                    const message = responseData.message;
+                    this.$Message.info(message);
+                }else{
+                    this.$emit("eventFromMediaItem",media)
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+        reviewMedia(media){
+            console.log(media);
+            this.modalReview = true;
+        },
+        onReviewPassMedia(){
+            updateMediaReviewStatus(this.media.id,{review_status:1}).then(response => {
+                const responseData = response.data;
+                const code = responseData.code;
+                if (code != 0) {
+                    const message = responseData.message;
+                    this.$Message.info(message);
+                }else{
+                    this.media.review_status = 1;
+                    this.subscriptText = "通过";
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+        onReviewNotPassMedia(){
+            updateMediaReviewStatus(this.media.id,{review_status:-1}).then(response => {
+                const responseData = response.data;
+                const code = responseData.code;
+                if (code != 0) {
+                    const message = responseData.message;
+                    this.$Message.info(message);
+                }else{
+                    this.media.review_status = -1;
+                    this.subscriptText = "未通过";
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+    },
+    created() {
+        if (this.media.review_status == 1){
+            this.subscriptText = "通过";
+        }else if (this.media.review_status == -1){
+            this.subscriptText = "未通过";
+        }else{
+            this.subscriptText = "未评审";
+        }
+    },
+};
 </script>
+<style>
+    .subscript{
+        color: #fff;
+        height: 25px;
+        width: 90px;
+        position: absolute;
+        right: -30px;
+        text-align: center;
+        line-height: 30px;
+        font-family: "黑体";
+        -moz-transform:rotate(45deg);
+        -webkit-transform:rotate(45deg);
+        -o-transform:rotate(45deg);
+        -ms-transform:rotate(45deg);
+        transform:rotate(45deg);
+    }
+    .subscript-color0{
+        background-color: #0c60ee;
+    }
+    .subscript-color1{
+        background-color: #5cb85c;
+    }
+    .subscript-color-1{
+        background-color: #ed3f14;
+    }
+</style>
 <style scoped>
     h4{
         color: #222;
@@ -99,10 +181,7 @@
     .product-main{
         display: block;
         border: 2px solid #dddee1;
-        /*margin: 6px;
-        padding: 16px;
-        
-        border-radius: 6px;*/
+        cursor:pointer;
         overflow: hidden;
         background: #fff;
         position: relative;
@@ -171,5 +250,31 @@
         display:-webkit-box;
         margin-left: 10px;
         margin-right: 10px;
+    }
+    .media-delete{
+        display: none;
+        padding: 4px 8px;
+        font-size: 12px;
+        border-radius: 3px;
+        cursor: pointer;
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+    }
+    .media-review{
+        display: none;
+        padding: 4px 8px;
+        font-size: 12px;
+        border-radius: 3px;
+        cursor: pointer;
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+    }
+    .product-main:hover .media-review{
+        display: inline-block;
+    }
+    .product-main:hover .media-delete{
+        display: inline-block;
     }
 </style>

@@ -121,9 +121,10 @@ export function deleteMedia(id) {
     });
 }
 
-export function updateMediaReviewStatus(id) {
+export function updateMediaReviewStatus(id,data) {
     return fetch({
-        url: '/genesis/v1/media/' + id + 'reviewStatus',
-        method: 'put'
+        url: '/genesis/v1/media/' + id + '/reviewStatus',
+        method: 'put',
+        data
     });
 }
