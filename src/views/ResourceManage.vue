@@ -68,7 +68,7 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener("scroll", this.scrollHandler);
+    window.addEventListener("scroll", this.scrollHandler,true);
     if(this.$route.query.tabName != null){
       this.tabName = this.$route.query.tabName
     }
