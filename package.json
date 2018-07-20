@@ -1,8 +1,8 @@
 {
-  "name": "WZ",
+  "name": "genesis",
   "version": "1.0.0",
-  "description": "WZ base on Vue.js",
-  "author": "herozhou <zhouhero@hotmail.com>",
+  "description": "genesis base on Vue.js",
+  "author": "yuanyuexiang <yuanyuexiang@126.com>",
   "license": "MIT",
   "private": false,
   "scripts": {
