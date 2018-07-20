@@ -1,40 +1,53 @@
 <template>
     <Tabs>
         <TabPane label="欢迎词" icon="ribbon-b">
+            <!--
             <Col span="24" class="demo-tabs-style1" style="background: #e3e8ee;padding:16px;">
-            <Tabs type="card">
-                <TabPane label="文字" icon="reply">
-                    <div class="container">
-                        <Input v-model="textarea" class="ivu-input1" type="textarea" :autofocus="false" :autosize="{minRows: 14,maxRows: 14}" style="height:inherit;" placeholder="Enter something..."></Input>
-                    </div>
-                </TabPane>
-                <TabPane label="图片" icon="key">
-                    <div class="container">
-                        <Button type="ghost" icon="chevron-down" @click="modal1 = true">选择</Button>
-                    </div>
-                    <Modal
-                        v-model="modal1"
-                        :scrollable="true"
-                        title="选择封面">
-                        <Scroll :on-reach-bottom="handleReachBottom">
-                          <Card :title="item.title" v-for="item in mediaList" :media="item" :key="item.id" style="margin: 0;cursor: pointer;">
-                            <div style="text-align:center">
-                                <img :src="item.url" @click="onSelectItem(item)">
-                            </div>
-                          </Card>
-                        </Scroll>
-                        <div slot="footer"></div>
-                    </Modal>
-                </TabPane>
-            </Tabs>
-            <Button>保存</Button>
+                <Tabs type="card">
+                    <TabPane label="文字" icon="reply">
+                        <div class="container">
+                            <Input v-model="textarea" class="ivu-input1" type="textarea" :autofocus="false" :autosize="{minRows: 14,maxRows: 14}" style="height:inherit;" placeholder="Enter something..."></Input>
+                        </div>
+                    </TabPane>
+                    
+                    <TabPane label="图片" icon="key">
+                        <div class="container">
+                            <Button type="ghost" icon="chevron-down" @click="modal1 = true">选择</Button>
+                        </div>
+                        <Modal
+                            v-model="modal1"
+                            :scrollable="true"
+                            title="选择封面">
+                            <Scroll :on-reach-bottom="handleReachBottom">
+                            <Card :title="item.title" v-for="item in mediaList" :media="item" :key="item.id" style="margin: 0;cursor: pointer;">
+                                <div style="text-align:center">
+                                    <img :src="item.url" @click="onSelectItem(item)">
+                                </div>
+                            </Card>
+                            </Scroll>
+                            <div slot="footer"></div>
+                        </Modal>
+                    </TabPane>
+                
+                </Tabs>
             </Col>
+            -->
+            <div class="container">
+                <Input v-model="textarea" class="ivu-input1" type="textarea" :autofocus="false" :autosize="{minRows: 14,maxRows: 14}" style="height:inherit;" placeholder="Enter something..."></Input>
+            </div>
+            <Button style="margin-top:10px;">保存</Button>
         </TabPane>
         <TabPane label="默认回复" icon="reply">
+            <!--
             <Tabs type="card">
                 <TabPane label="文字" icon="reply">文字</TabPane>
                 <TabPane label="图片" icon="key">图片</TabPane>
             </Tabs>
+            -->
+            <div class="container">
+                <Input v-model="textarea" class="ivu-input1" type="textarea" :autofocus="false" :autosize="{minRows: 14,maxRows: 14}" style="height:inherit;" placeholder="Enter something..."></Input>
+            </div>
+            <Button style="margin-top:10px;">保存</Button>
         </TabPane>
         <TabPane label="关键词回复" icon="key">
             <Tabs type="card">
