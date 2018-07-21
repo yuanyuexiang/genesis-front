@@ -33,28 +33,24 @@
             </Col>
             -->
             <div class="container">
-                <Input v-model="textarea" class="ivu-input1" type="textarea" :autofocus="false" :autosize="{minRows: 14,maxRows: 14}" style="height:inherit;" placeholder="Enter something..."></Input>
+                <Input v-model="subscribe" class="ivu-input1" type="textarea" :autofocus="false" :autosize="{minRows: 14,maxRows: 14}" style="height:inherit;" placeholder="Enter something..."></Input>
             </div>
-            <Button style="margin-top:10px;">保存</Button>
+            <Button @click="onUpdateSubscribeDefultReply" style="margin-top:10px;">保存</Button>
         </TabPane>
         <TabPane label="默认回复" icon="reply">
-            <!--
-            <Tabs type="card">
-                <TabPane label="文字" icon="reply">文字</TabPane>
-                <TabPane label="图片" icon="key">图片</TabPane>
-            </Tabs>
-            -->
             <div class="container">
-                <Input v-model="textarea" class="ivu-input1" type="textarea" :autofocus="false" :autosize="{minRows: 14,maxRows: 14}" style="height:inherit;" placeholder="Enter something..."></Input>
+                <Input v-model="receiveMessage" class="ivu-input1" type="textarea" :autofocus="false" :autosize="{minRows: 14,maxRows: 14}" style="height:inherit;" placeholder="Enter something..."></Input>
             </div>
-            <Button style="margin-top:10px;">保存</Button>
+            <Button @click="onUpdateReceiveMessageDefultReply" style="margin-top:10px;">保存</Button>
         </TabPane>
+        <!--
         <TabPane label="关键词回复" icon="key">
             <Tabs type="card">
                 <TabPane label="文字" icon="reply">文字</TabPane>
                 <TabPane label="图片" icon="key">图片</TabPane>
             </Tabs>
         </TabPane>
+        -->
     </Tabs>
 </template>
 
@@ -62,7 +58,7 @@
 import IntroChartCount from "./charts/IntroChartCount";
 import IntroChartPie from "./charts/IntroChartPie";
 import {
-  listMedia,
+    listMedia,
 } from "api/resource";
 import {
     saveDefultReply,
@@ -77,108 +73,131 @@ import {
 } from "api/reply";
 
 export default {
-  components: { IntroChartCount, IntroChartPie },
-  name: "interaction",
-  data() {
-    return {
-      value1: 0,
-      value2: 0,
-      value3: 0,
-
-      speed: 10000,
-
-      textarea: '',
-      
-      mediaList: [],
-      modal1:false,
-      offset: 0,
-    };
-  },
-  methods: {
-    test_logout() {
-      this.$store
-        .dispatch("LogOut")
-        .then(() => {
-          this.$router.push({ path: "/login" });
-        })
-        .catch(err => {
-          this.$message.error(err);
-        });
+    components: { 
+        IntroChartCount, IntroChartPie 
     },
-    handleReachBottom() {
-      this.listAllMedia(this.offset);
-    },
-    listAllMedia(offset) {
-      this.$Loading.start();
-      listMedia(offset, 10, "type:image")
-        .then(response => {
-          const responseData = response.data;
-          const code = responseData.code;
-          if (code != 0) {
-            const message = responseData.message;
-            this.$Message.info(message);
-          }
+    name: "interaction",
+    data() {
+        return {
+            value1: 0,
+            value2: 0,
+            value3: 0,
 
-          const data = responseData.data;
-          this.mediaList = this.mediaList.concat(data);
-          console.log(this.mediaList);
-          if (this.mediaList != null) {
-            this.offset = this.mediaList.length;
-          }
-          this.$Loading.finish();
-        })
-        .catch(error => {
-          console.log(error);
-          this.$Loading.error();
-        });
-    },
-    getDefultSubscribeReply() {
-      this.$Loading.start();
-      getDefultReply("subscribe")
-        .then(response => {
-          const responseData = response.data;
-          const code = responseData.code;
-          if (code != 0) {
-            const message = responseData.message;
-            this.$Message.info(message);
-          }
+            speed: 10000,
 
-          const data = responseData.data;
-          this.textarea = data.content;
-          console.log("------------------getDefultReply----------------------");
-          console.log(data);
-          this.$Loading.finish();
-        })
-        .catch(error => {
-          console.log(error);
-          this.$Loading.error();
-        });
+            subscribe: '',
+            receiveMessage: '',
+            mediaList: [],
+            modal1:false,
+            offset: 0,
+        };
     },
-    getDefultReceiveMessageReply() {
-      this.$Loading.start();
-      getDefultReply("receiveMessage")
-        .then(response => {
-          const responseData = response.data;
-          const code = responseData.code;
-          if (code != 0) {
-            const message = responseData.message;
-            this.$Message.info(message);
-          }
+    methods: {
+        handleReachBottom() {
+            this.listAllMedia(this.offset);
+        },
+        listAllMedia(offset) {
+            this.$Loading.start();
+            listMedia(offset, 10, "type:image").then(response => {
+                const responseData = response.data;
+                const code = responseData.code;
+                if (code != 0) {
+                const message = responseData.message;
+                this.$Message.info(message);
+                }
 
-          const data = responseData.data;
-          console.log(data);
-          this.$Loading.finish();
-        })
-        .catch(error => {
-          console.log(error);
-          this.$Loading.error();
-        });
+                const data = responseData.data;
+                this.mediaList = this.mediaList.concat(data);
+                console.log(this.mediaList);
+                if (this.mediaList != null) {
+                this.offset = this.mediaList.length;
+                }
+                this.$Loading.finish();
+            }).catch(error => {
+                console.log(error);
+                this.$Loading.error();
+            });
+        },
+        getDefultSubscribeReply() {
+            this.$Loading.start();
+            getDefultReply("subscribe").then(response => {
+                const responseData = response.data;
+                const code = responseData.code;
+                if (code != 0) {
+                    const message = responseData.message;
+                    this.$Message.info(message);
+                }
+
+                const data = responseData.data;
+                this.subscribe = data.content;
+                console.log(data);
+                this.$Loading.finish();
+            }).catch(error => {
+                console.log(error);
+                this.$Loading.error();
+            });
+        },
+        getDefultReceiveMessageReply() {
+            this.$Loading.start();
+            getDefultReply("receiveMessage").then(response => {
+                const responseData = response.data;
+                const code = responseData.code;
+                if (code != 0) {
+                    const message = responseData.message;
+                    this.$Message.info(message);
+                }
+
+                const data = responseData.data;
+                this.receiveMessage = data.content;
+                console.log(data);
+                this.$Loading.finish();
+            }).catch(error => {
+                console.log(error);
+                this.$Loading.error();
+            });
+        },  
+        onUpdateSubscribeDefultReply(){
+            this.$Loading.start();
+            updateDefultReply("subscribe",{type:"subscribe",content_type:"text",content:this.subscribe}).then(response => {
+                const responseData = response.data;
+                const code = responseData.code;
+                if (code != 0) {
+                    const message = responseData.message;
+                    this.$Message.info(message);
+                }
+                this.$Message.info("更新成功");
+                const data = responseData.data;
+                console.log(data);
+                this.$Loading.finish();
+            }).catch(error => {
+                console.log(error);
+                this.$Loading.error();
+            });
+        },
+        onUpdateReceiveMessageDefultReply(){
+            this.$Loading.start();
+            updateDefultReply("receiveMessage",{type:"receiveMessage",content_type:"text",content:this.receiveMessage}).then(response => {
+                const responseData = response.data;
+                const code = responseData.code;
+                if (code != 0) {
+                    const message = responseData.message;
+                    this.$Message.info(message);
+                }
+                this.$Message.info("更新成功");
+                const data = responseData.data;
+                console.log(data);
+                this.$Loading.finish();
+            }).catch(error => {
+                console.log(error);
+                this.$Loading.error();
+            });
+        },
     },
-  },
-  mounted() {
-    const token = this.$store.getters.token;
-    this.getDefultSubscribeReply();
-  }
+    mounted() {
+        const token = this.$store.getters.token;
+        this.getDefultSubscribeReply();
+        this.getDefultReceiveMessageReply();
+    }
 };
 </script>
 
@@ -189,14 +208,6 @@ export default {
 }
 .content {
   padding-left: 5px;
-}
-h3,
-h4,
-h5 {
-  margin: 12px;
-}
-h3 {
-  margin-bottom: 20px;
 }
 p {
   margin: 12px;
@@ -248,7 +259,7 @@ textarea {
 }
 .container{
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     background-color: white;
     border-radius: 0px;
     border-bottom: 1px solid #dddee1;

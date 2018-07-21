@@ -15,17 +15,17 @@ export function getDefultReply(type) {
     });
 }
 
-export function updateDefultReply(id, data) {
+export function updateDefultReply(type, data) {
     return fetch({
-        url: '/genesis/v1/reply/defult/' + id,
+        url: '/genesis/v1/reply/defult/' + type,
         method: 'put',
         data
     });
 }
 
-export function deleteDefultReply(id) {
+export function deleteDefultReply(type) {
     return fetch({
-        url: '/genesis/v1/reply/defult/' + id,
+        url: '/genesis/v1/reply/defult/' + type,
         method: 'delete',
     });
 }
@@ -39,9 +39,9 @@ export function saveKeyReply(data) {
     });
 }
 
-export function getKeyReply(type) {
+export function getKeyReply(key) {
     return fetch({
-        url: '/genesis/v1/reply/key/'+type,
+        url: '/genesis/v1/reply/key/'+key,
         method: 'get',
     });
 }
@@ -63,17 +63,17 @@ export function listKeyReply(offset, limit ,query) {
     });
 }
 
-export function updateKeyReply(id, data) {
+export function updateKeyReply(key, data) {
     return fetch({
-        url: '/genesis/v1/reply/key/' + id,
+        url: '/genesis/v1/reply/key/' + key,
         method: 'put',
         data
     });
 }
 
-export function deleteKeyReply(id) {
+export function deleteKeyReply(key) {
     return fetch({
-        url: '/genesis/v1/reply/key/' + id,
+        url: '/genesis/v1/reply/key/' + key,
         method: 'delete',
     });
 }
