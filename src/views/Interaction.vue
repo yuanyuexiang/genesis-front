@@ -201,7 +201,7 @@ export default {
 };
 </script>
 
-<style type="text/css" >
+<style type="text/css" scoped>
 .time {
   font-size: 14px;
   font-weight: bold;
@@ -249,7 +249,7 @@ textarea {
     box-shadow: transparent;
     -webkit-box-shadow: transparent;
 }
-.ivu-input {
+.ivu-input1 >>> .ivu-input {
     border-color:transparent;
     outline: 0;
     box-shadow: transparent;
